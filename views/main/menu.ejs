@@ -1,0 +1,73 @@
+<%- layout('layouts/boilerplate.ejs') %>
+    <div class=" container mt-5" style="align-items: center;">
+        <div class="card shadow mx-auto mb-5" style="width: 100;">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-6">
+                        <img src="https://images.unsplash.com/photo-1540189549336-e6e99c3679fe?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Nnx8Zm9vZHxlbnwwfHwwfHw%3D&auto=format&fit=crop&w=600&q=60"
+                            class="card-img-top my-2" style="border-radius: 5px;" alt="...">
+                    </div>
+                    <div class="col-md-6">
+                        <div class="card-body">
+                            <!-- ----entree---- -->
+                            <p class="card-text">
+                            <div class="row mb-2">
+                                <div class="col">
+                                    <h4 style="color:rgb(120, 76, 60);">Entrées - 10 €
+                                    </h4>
+                                    <%for(newEntrees of allEntrees){%>
+                                        <p>
+                                            <%=newEntrees.description%>
+                                        </p>
+                                        <%}%>
+                                </div>
+                            </div>
+                            <!-- ----Plats---- -->
+                            <div class="row mb-2">
+                                <div class="col">
+                                    <h4 style="color:rgb(120, 76, 60);">Plats - 24 €</h4>
+                                    <%for(newPlats of allPlats){%>
+                                        <p>
+                                            <%=newPlats.description%>
+                                        </p>
+                                        <%}%>
+                                </div>
+                            </div>
+                            <!-- ----desserts---- -->
+                            <div class="row mb-2">
+                                <div class="col">
+                                    <h4 style="color:rgb(120, 76, 60);">Desserts - 9 €</h4>
+                                    <%for(newDesserts of allDesserts){%>
+                                        <p>
+                                            <%=newDesserts.description%>
+                                        </p>
+                                        <%}%>
+                                </div>
+                            </div>
+                            </p>
+                            <%if(foundAdmin==='admin' ){%>
+                                <a class="btn btn-success" href="/main/editMenu">Edit Menu</a>
+                                <%}%>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- -----Formule----  -->
+        <div class="row  mb-5">
+            <div class="card shadow mx-auto" style="background-color: #f9f7f3;">
+                <div class="card-body">
+                    <div class="card-text mb-5" style="text-align: center; color: rgb(120, 76, 60);">
+                        <h5>Formule Diner</h5>
+                        <p class="text-muted">(Du lundi au samedi midi)</p>
+                        <p>Entrée + Plat + Dessert 20€</p>
+                    </div>
+                    <div class="card-text" style="text-align: center; color: rgb(120, 76, 60);">
+                        <h5>Formule Diner</h5>
+                        <p class="text-muted">(Le midi du lundi au vendredi)</p>
+                        <p>Entrée + Plat ou Plat + Dessert 16€</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>

@@ -1,0 +1,197 @@
+<%- layout('layouts/boilerplate.ejs') %>
+    <div class="container">
+        <h1 class="pt-4" style="font-family: 'Parisienne', cursive; font-size:100px; text-align: center; color:#6c584c">
+            Quai
+            Antique</h1>
+        <hr>
+
+        <!-- -------PHOTO CAROUSEL-------- -->
+        <div class="container w-100 mx-auto container-fluid mb-5">
+            <div class="row d-flex" style="align-items: end;">
+                <div class="col d-flex" style="justify-content: center;">
+                    <div class="card">
+                        <div id="carouselExampleFade" class="carousel slide carousel-fade shadow"
+                            data-bs-ride="carousel">
+                            <div class="carousel-inner">
+                                <!-- Update: changed to forEach instead of for-of to use index for conditional setting of 'active' -->
+                                <%allImages.forEach((newImages, index)=>{%>
+                                    <div class="carousel-item <%=index === 0? 'active': '' %>">
+                                        <img src="<%=newImages.imageUrl%>" class="d-block w-100 img-fluid col-md-6"
+                                            alt="...">
+                                    </div>
+                                    <%})%>
+                            </div>
+                            <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleFade"
+                                data-bs-slide="prev">
+                                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                <span class="visually-hidden">Previous</span>
+                            </button>
+                            <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleFade"
+                                data-bs-slide="next">
+                                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                <span class="visually-hidden">Next</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <hr>
+        <!-- photo descriptions -->
+        <div class="container">
+            <!-- row1 -->
+            <div class="row mb-3 mt-5 d-flex">
+                <div class="col-md-6">
+                    <img src="<%=allImages[2].imageUrl%>" alt="" class="col-md-6 w-100">
+                    <%if(foundAdmin==='admin' ){%>
+                        <a class="btn btn-success mt-2" href="/main/edit/<%=allImages[2].id%>">Upload</a>
+                        <%}%>
+                </div>
+                <div class="col-md-6 d-flex flex-column" style="transform: translateY(5rem);">
+                    <p style="text-align: center;">
+                        <%=allEntrees[0].description%>
+                    </p>
+                </div>
+            </div>
+            <!-- row2 -->
+            <div class="row mb-3 d-flex">
+                <div class="col-md-6 order-md-2">
+                    <img src="<%=allImages[0].imageUrl%>" alt="" class="col-md-6 w-100">
+                    <%if(foundAdmin==='admin' ){%>
+                        <a class="btn btn-success mt-2" href="/main/edit/<%=allImages[0].id%>">Upload</a>
+                        <%}%>
+                </div>
+                <div class="col-md-6 d-flex flex-column" style="transform: translateY(5rem);">
+                    <p style="text-align: center;">
+                        <%=allPlats[0].description%>
+                    </p>
+                </div>
+            </div>
+            <!-- row3 -->
+            <div class="row mb-3 d-flex">
+                <div class="col-md-6">
+                    <img src="<%=allImages[1].imageUrl%>" alt="" class="col-md-6 w-100">
+                    <%if(foundAdmin==='admin' ){%>
+                        <a class="btn btn-success mt-2" href="/main/edit/<%=allImages[1].id%>">Upload</a>
+                        <%}%>
+                </div>
+                <div class="col-md-6 d-flex flex-column" style="transform: translateY(5rem);">
+                    <p style="text-align: center;">
+                        <%=allDesserts[0].description%>
+                    </p>
+                </div>
+            </div>
+        </div>
+        <!-- ---------------------HORAIRES------------------- -->
+        <div class="card mt-5 mb-5 shadow" style="background-color: #f9f7f3;">
+            <div class="card-body mx-auto">
+                <h1 class="card-title" style="font-family: 'Parisienne', cursive; text-align: center; color:#6c584c">Nos
+                    Horaires
+                </h1>
+                <table class=" table">
+                    <tbody>
+                        <!-- monday -->
+                        <tr>
+                            <td colspan="5">
+                                <%if(foundAdmin==='admin' ){%>
+                                    <a class="btn btn-success me-3" href="/main/editHours/<%=allHours[0].id%>">Edit</a>
+                                    <%}%>
+                                        <%=allHours[0].day%>
+                            </td>
+                            <td></td>
+                            <td style="color:rgb(120, 76, 60); padding-left: 6rem;">
+                                <%=allHours[0].first_opening%> - <%=allHours[0].first_closing%>
+                                        <br>
+                                        <%=allHours[0].second_opening%> - <%=allHours[0].second_closing%>
+
+                            </td>
+                        </tr>
+                        <!-- tuesday -->
+                        <tr>
+                            <td colspan="5">
+                                <%if(foundAdmin==='admin' ){%>
+                                    <a class="btn btn-success me-3" href="/main/editHours/<%=allHours[1].id%>">Edit</a>
+                                    <%}%>
+                                        <%=allHours[1].day%>
+                            </td>
+                            <td></td>
+                            <td style="color:rgb(120, 76, 60); padding-left: 6rem;">
+                                <%=allHours[1].first_opening%> - <%=allHours[1].first_closing%>
+                                        <br>
+                                        <%=allHours[1].second_opening%> - <%=allHours[1].second_closing%>
+                            </td>
+                        </tr>
+                        <!-- wednesday -->
+                        <tr>
+                            <td colspan="5">
+                                <%if(foundAdmin==='admin' ){%>
+                                    <a class="btn btn-success me-3" href="/main/editHours/<%=allHours[2].id%>">Edit</a>
+                                    <%}%>
+                                        <%=allHours[2].day%>
+                            </td>
+                            <td></td>
+                            <td style="color:rgb(120, 76, 60); padding-left: 6rem;">Closed
+                            </td>
+                        </tr>
+                        <!-- thursday -->
+                        <tr>
+                            <td colspan="5">
+                                <%if(foundAdmin==='admin' ){%>
+                                    <a class="btn btn-success me-3" href="/main/editHours/<%=allHours[3].id%>">Edit</a>
+                                    <%}%>
+                                        <%=allHours[3].day%>
+                            </td>
+                            <td></td>
+                            <td style="color:rgb(120, 76, 60); padding-left: 6rem;">
+                                <%=allHours[3].first_opening%> - <%=allHours[3].first_closing%>
+                                        <br>
+                                        <%=allHours[3].second_opening%> - <%=allHours[3].second_closing%>
+                            </td>
+                        </tr>
+                        <!-- friday -->
+                        <tr>
+                            <td colspan="5">
+                                <%if(foundAdmin==='admin' ){%>
+                                    <a class="btn btn-success me-3" href="/main/editHours/<%=allHours[4].id%>">Edit</a>
+                                    <%}%>
+                                        <%=allHours[4].day%>
+                            </td>
+                            <td></td>
+                            <td style="color:rgb(120, 76, 60); padding-left: 6rem;">
+                                <%=allHours[4].first_opening%> - <%=allHours[4].first_closing%>
+                                        <br>
+                                        <%=allHours[4].second_opening%> - <%=allHours[4].second_closing%>
+                            <td>
+                            </td>
+                        </tr>
+                        <!-- saturday -->
+                        <tr>
+                            <td colspan="5">
+                                <%if(foundAdmin==='admin' ){%>
+                                    <a class="btn btn-success me-3" href="/main/editHours/<%=allHours[5].id%>">Edit</a>
+                                    <%}%>
+                                        <%=allHours[5].day%>
+                            </td>
+                            <td></td>
+                            <td style="color:rgb(120, 76, 60); padding-left: 6rem;">
+                                <%=allHours[5].first_opening%> - <%=allHours[5].first_closing%>
+                            </td>
+                        </tr>
+                        <!-- sunday -->
+                        <tr>
+                            <td colspan="5">
+                                <%if(foundAdmin==='admin' ){%>
+                                    <a class="btn btn-success me-3" href="/main/editHours/<%=allHours[6].id%>">Edit</a>
+                                    <%}%>
+                                        <%=allHours[6].day%>
+                            </td>
+                            <td></td>
+                            <td style="color:rgb(120, 76, 60); padding-left: 6rem;">
+                                <%=allHours[6].first_opening%> - <%=allHours[6].first_closing%>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>

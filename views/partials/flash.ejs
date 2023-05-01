@@ -1,0 +1,21 @@
+<!-- dismassable alert from bootstrap -->
+<!-- using an if statement to check whether a route has a req.flash. then will run this if it returns true. this is possible because we saved the res.locals in a middleware which runs for every route. -->
+<%if(success && success.length){%>
+    <div class="alert alert-success alert-dismissible fade show" role="alert"
+        style="text-align: center; font-weight: 500; font-size: 1.5rem;">
+        <!-- using the res.locals flash we created to display the message we want -->
+        <strong">
+            <%=success%>
+                </strong>
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+    <%} else if (error && error.length){%>
+        <div class="alert alert-danger alert-dismissible fade show" role="alert"
+            style="text-align: center; font-weight: 500; font-size: 1.5rem;">
+            <!-- using the res.locals flash we created to display the message we want -->
+            <strong">
+                <%=error%>
+                    </strong>
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+        <%}%>

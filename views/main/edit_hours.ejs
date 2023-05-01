@@ -1,0 +1,40 @@
+<%- layout('layouts/boilerplate.ejs') %>
+    <div class="container">
+        <div class="row">
+            <div class="card mt-5 mx-auto" style="width: 40rem;">
+                <div class="card-body">
+                    <h5 class="card-title">Edit Hours</h5>
+                    <h5 class="card-title mb-2" style="color: brown;">
+                        <%=hours[0].day%>
+                    </h5>
+                    <form method="POST" action="/main/<%=hours[0].id%>">
+                        <!-- ---first_opening--- -->
+                        <div class="mb-3">
+                            <label for="OpeningHourInput" class="form-label">Enter First Opening Hour</label>
+                            <input type="time" class="form-control" id="openingHourInput" name="editHour[first_opening]"
+                                required>
+                        </div>
+                        <!-- ---first_closing--- -->
+                        <div class="mb-3">
+                            <label for="closingHourInput" class="form-label">Enter First Closing Hour</label>
+                            <input type="time" class="form-control" id="closingHourInput" name="editHour[first_closing]"
+                                required>
+                        </div>
+                        <!-- ---second_opening--- -->
+                        <div class="mb-3">
+                            <label for="closingHourInput" class="form-label">Enter Second Opening Hour</label>
+                            <input type="time" class="form-control" id="closingHourInput"
+                                name="editHour[second_opening]" placeholder="00:00:00">
+                        </div>
+                        <!-- ---second_closing--- -->
+                        <div class="mb-3">
+                            <label for="closingHourInput" class="form-label">Enter Second Opening Hour</label>
+                            <input type="time" class="form-control" id="closingHourInput"
+                                name="editHour[second_closing]" placeholder="00:00:00">
+                        </div>
+                        <button class="btn btn-success">Update</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>

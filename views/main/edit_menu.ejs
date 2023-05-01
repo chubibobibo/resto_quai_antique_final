@@ -1,0 +1,120 @@
+<%- layout('layouts/boilerplate.ejs') %>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6  mt-5 mb-5">
+                <div class="card">
+                    <!-- <img src="/assets/restoLogo.png" class="card-img-top" alt="..." style="height: 25rem;"> -->
+                    <div class="card-body">
+                        <h5 class="card-title">Add Menu Item</h5>
+                        <!-- ----Edit menu form---- -->
+                        <form method="POST" action="/main/addMenu">
+                            <!-- ----title---- -->
+                            <div class="mb-3">
+                                <label for="text" class="form-label">Title</label>
+                                <input type="text" class="form-control" id="text" name="menu[title]" required>
+                            </div>
+                            <!-- ----category---- -->
+                            <div class="mb-3">
+                                <select class="form-select" aria-label="Default select example" name="menu[category]"
+                                    required>
+                                    <option value="">Category</option>
+                                    <option value="Entrées">Entrées</option>
+                                    <option value="Plats">Plats</option>
+                                    <option value="Desserts">Desserts</option>
+                                </select>
+                            </div>
+                            <!-- ----price---- -->
+                            <div class="mb-3">
+                                <select class="form-select" aria-label="Default select example" name="menu[price]">
+                                    <option value="">Price</option>
+                                    <option value="10.00">10.00</option>
+                                    <option value="24.00">24.00</option>
+                                    <option value="9.00">9.00</option>
+                                </select>
+                            </div>
+                            <!-- ----description---- -->
+                            <div class="mb-3">
+                                <label for="exampleFormControlTextarea1" class="form-label">Description</label>
+                                <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"
+                                    name="menu[description]" required></textarea>
+                            </div>
+                            <button type="submit" class="btn btn-primary">Add Item</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ----List of the current menu for deleting---- -->
+            <div class="col-md-6 mt-5 mb-5">
+                <div class="card">
+                    <h5 class="card-title mt-3 ms-3">Delete Menu Items</h5>
+                    <div class="card-body">
+                        <p class="card-text">
+                        <form method="POST" action="/main/deleteMenu">
+                            <div class="row mb-2">
+                                <!-- ----entrees---- -->
+                                <div class="col">
+                                    <h4 style="color:rgb(120, 76, 60);">Entrées - 10 €
+                                    </h4>
+                                    <% allEntrees.forEach(function(desc, i){%>
+                                        <p>
+                                            <%=desc.description%>
+                                                <div class="form-check">
+                                                    <input class="form-check-input" type="checkbox" value="<%=desc.id%>"
+                                                        name="deletedMenu[]" id="desc-entrees-<%=[i]%>">
+                                                    <label style="font-weight: 500; color: red;"
+                                                        class=" form-check-label" for="desc-entrees-<%=[i]%>">
+                                                        Delete
+                                                    </label>
+                                                </div>
+                                        </p>
+                                        <%})%>
+                                </div>
+                                <!-- ----plats---- -->
+                                <div class="row mb-2">
+                                    <div class="col">
+                                        <h4 style="color:rgb(120, 76, 60);">Plats - 24 €</h4>
+                                        <%allPlats.forEach(function(desc, i){%>
+                                            <p>
+                                                <%=desc.description%>
+                                            </p>
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="checkbox" value="<%=desc.id%>"
+                                                    id="desc-plats-<%=[i]%>" name="deletedMenu[]">
+                                                <label class="form-check-label" style="font-weight: 500; color: red;"
+                                                    for="desc-plats-<%=[i]%>">
+                                                    Delete
+                                                </label>
+                                            </div>
+                                            <%})%>
+                                    </div>
+                                </div>
+                                <!-- ----desserts---- -->
+                                <div class="row mb-2">
+                                    <div class="col">
+                                        <h4 style="color:rgb(120, 76, 60);">Desserts - 9 €</h4>
+                                        <%allDesserts.forEach(function(desc, i){%>
+                                            <p>
+                                                <%=desc.description%>
+                                                    <div class="form-check">
+                                                        <input class="form-check-input" type="checkbox"
+                                                            value="<%=desc.id%>" id="desc-desserts-<%=[i]%>"
+                                                            name="deletedMenu[]">
+                                                        <label class="form-check-label"
+                                                            style="font-weight: 500; color: red;"
+                                                            for="desc-desserts-<%=[i]%>">
+                                                            Delete
+                                                        </label>
+                                                    </div>
+                                            </p>
+                                            <%})%>
+                                                <button class="btn btn-danger">Delete</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>

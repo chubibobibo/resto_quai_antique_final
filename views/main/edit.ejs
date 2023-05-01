@@ -1,0 +1,18 @@
+<%- layout('layouts/boilerplate.ejs') %>
+    <div class="container">
+        <div class="row">
+            <div class="card mt-5 mx-auto" style="width: 40rem;">
+                <div class="card-body mx-auto">
+                    <h5 class="card-title mb-4" style="text-align: center;">Edit Photo</h5>
+                    <img src="<%=newPhoto[0].imageUrl%>" class="img-fluid mb-3" style="height: 20rem;" alt="">
+                    <form method="POST" action="/main/<%=newPhoto[0].id%>?_method=PUT" enctype="multipart/form-data">
+                        <div class="input-group mb-3">
+                            <input type="file" class="form-control" id="inputGroupFile02" name="photo" required>
+                            <label class="input-group-text" for="inputGroupFile02">Upload</label>
+                        </div>
+                        <button class="btn btn-success">Upload</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
