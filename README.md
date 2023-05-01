@@ -18,7 +18,7 @@ Getting the node server running localy.
 - Create a new database.
 - Copy the `CREATE TABLE` queries in the `create_database.sql` found at the root of the project directory.
 - Copy the `INSERT INTO` queries in the `create_database.sql` to seed the initial values to the database. You can change this later.
-- Create a .env file
+- Create a .env file at the root of the project directory
 
     <img width="405" alt="image" src="https://user-images.githubusercontent.com/105818713/235437065-42613c24-91bd-4aee-a29c-ed3d125f7903.png">
 
