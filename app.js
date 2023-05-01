@@ -10,6 +10,9 @@ import methodOverride from 'method-override'
 import main from './routes/main.js';
 import user from './routes/user.js';
 import ExpressError from './utils/expressError.js'
+import dotenv from 'dotenv'
+dotenv.config()
+
 // import { getHours, getUser, getAll } from './database.js'
 
 
