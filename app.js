@@ -87,6 +87,6 @@ app.use((err, req, res, next) => {
 })
 //check
 const port = process.env.DB_PORT
-app.listen(3000, () => {
-    console.log(`SERVING PORT 3000`)
+app.listen(port, () => {
+    console.log(`SERVING PORT ${port}`)
 })
