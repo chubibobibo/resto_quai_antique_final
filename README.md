@@ -47,6 +47,8 @@ to:
       
 - Run `nodemon app.js` in the terminal.
 
+- Run locally using this link: (http://localhost:3000/main)
+
 ## Create an admin for managing the web app
 go to this link (http://localhost:3000/user/register/admin) to add a new admin user
 
