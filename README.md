@@ -26,6 +26,11 @@ Getting the node server running localy.
 
 <img width="338" alt="image" src="https://user-images.githubusercontent.com/105818713/235450880-ea181b0e-46d3-40ab-858c-2dbedaa68810.png">
 
+to:
+
+<img width="307" alt="image" src="https://user-images.githubusercontent.com/105818713/235450999-238c5b35-6544-4646-8dd4-ccba1e235d3b.png">
+
+
 - configure the database settings at `database.js` which can be found at the root of the project directory.
 
     <img width="295" alt="image" src="https://user-images.githubusercontent.com/105818713/235437270-c49f55ef-e8ff-445e-9b37-c00d1273fa6c.png">
