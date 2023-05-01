@@ -112,7 +112,7 @@ router.post('/reservations', catchAsync(async (req, res) => {
         // console.log(totalCovers)
         if (totalCovers <= 20) {
             if (!user_id) {
-                await defaultReservation(reservation.date, reservation.time, reservation.covers, reservation.allergies, reservation.name, reservation.email)
+                await defaultReservation(reservation.date, reservation.time, reservation.name, reservation.email)
             }
             else if (!reservation.allergies || !reservation.covers) {
                 const allergies = foundLogin[0].allergies
