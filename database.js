@@ -24,10 +24,10 @@ export async function getImages(id) {
 
 // selecting all images
 export async function getAll() {
-    const [allImages] = await pool.query(`
-        SELECT * FROM images`
+    const allImages = await pool.query(
+        `SELECT * FROM images`
     )
-    return allImages[0]
+    return allImages
 };
 
 // selecting all menu
