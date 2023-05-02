@@ -6,18 +6,30 @@
                 <div class="card-body">
                     <h5 class="card-title">Create admin user</h5>
                     <!-- ----register form---- -->
-                    <form method="POST" action="/user/register/admin">
+                    <form method="POST" class="needs-validation" action="/user/register/admin" novalidate>
                         <div class="mb-3">
                             <label for="email" class="form-label">Email</label>
-                            <input type="email" class="form-control" id="email" name="admin_name">
+                            <input type="email" class="form-control" id="email" name="admin_name" required>
+                            <div class="valid-feedback">
+                                Looks good!
+                            </div>
+                            <div class="invalid-feedback">
+                                Please enter a valid email.
+                            </div>
                         </div>
                         <div class="mb-3">
                             <label for="password" class="form-label">Password</label>
-                            <input type="password" class="form-control" id="password" name="admin_password">
+                            <input type="password" class="form-control" id="password" name="admin_password" required>
+                            <div class="valid-feedback">
+                                Looks good!
+                            </div>
+                            <div class="invalid-feedback">
+                                Please enter a password.
+                            </div>
                         </div>
                         <!-- default covers -->
                         <div>
-                            <div class="input-group mb-3">
+                            <!-- <div class="input-group mb-3">
                                 <label class="input-group-text" for="inputGroupSelect01"><svg
                                         xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                                         class="bi bi-person-plus" viewBox="0 0 16 16">
@@ -27,44 +39,44 @@
                                             d="M13.5 5a.5.5 0 0 1 .5.5V7h1.5a.5.5 0 0 1 0 1H14v1.5a.5.5 0 0 1-1 0V8h-1.5a.5.5 0 0 1 0-1H13V5.5a.5.5 0 0 1 .5-.5z" />
                                     </svg></label>
                                 <select class="form-select" id="inputGroupSelect01" name="admin_defaultCovers" required>
-                                    <option value="0">Default</option>
+                                    <option value="0">Default covers</option>
                                     <!-- <option value="2">2 couverts</option>
                                     <option value="3">3 couverts</option>
                                     <option value="4">4 Couverts</option>
                                     <option value="5">5 Couverts</option> -->
-                                </select>
-                                <div class="valid-feedback">
-                                    Looks good!
-                                </div>
-                                <div class="invalid-feedback">
-                                    Please enter a message in the textarea.
-                                </div>
+                            </select>
+                            <div class="valid-feedback">
+                                Looks good!
+                            </div>
+                            <div class="invalid-feedback">
+                                Please enter a message in the textarea.
                             </div>
                         </div>
-                        <!-- account_type -->
-                        <div>
-                            <div class="input-group mb-3">
-                                <label class="input-group-text" for="inputGroupSelect01"></label>
-                                <select class="form-select" id="inputGroupSelect01" name="admin_account_type" required>
-                                    <option value="admin">Admin</option>
-                                </select>
-                                <div class="valid-feedback">
-                                    Looks good!
-                                </div>
-                                <div class="invalid-feedback">
-                                    Please enter a message in the textarea.
-                                </div>
-                            </div>
+                </div>
+                <!-- account_type -->
+                <div>
+                    <div class="input-group mb-3">
+                        <label class="input-group-text" for="inputGroupSelect01"></label>
+                        <select class="form-select" id="inputGroupSelect01" name="admin_account_type" required>
+                            <option value="admin">Admin</option>
+                        </select>
+                        <div class="valid-feedback">
+                            Looks good!
                         </div>
-                        <!-- default allergies -->
-                        <div class="form-floating mb-3">
+                        <div class="invalid-feedback">
+                            Please enter a message in the textarea.
+                        </div>
+                    </div>
+                </div>
+                <!-- default allergies -->
+                <!-- <div class="form-floating mb-3">
                             <textarea class="form-control" placeholder="Leave a comment here" id="reg_allergies"
                                 style="height: 100px" name="admin_allergies" value="None" required>None</textarea>
                             <label for="admin_allergies">Notes</label>
-                        </div>
-                        <button type="submit" class="btn btn-primary">Register</button>
-                    </form>
-                </div>
+                        </div> -->
+                <button type="submit" class="btn btn-primary">Register</button>
+                </form>
             </div>
         </div>
+    </div>
     </div>

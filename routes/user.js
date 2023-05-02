@@ -59,13 +59,14 @@ router.post('/login', catchAsync(async (req, res) => {
     if (loggedUser) {
         req.session.user_id = foundLogin[0].id
         req.flash('success', `Welcome ${foundLogin[0].email}`)
-    } else if (!loggedUser) {
+    } else if (!loggedUser || !foundLogin.email) {
         req.flash('error', 'Invalid username or password')
+        res.redirect('/user/login')
+        // res.redirect('/user/login')
     }
     // console.log(req.session)
     // console.log(req.session.user_id)
     // console.log(foundLogin[0].allergies)
-    res.redirect('/main')
 }))
 
 // logging out a user
@@ -85,8 +86,7 @@ router.post('/register/admin', catchAsync(async (req, res) => {
         const { admin_name, admin_password, admin_defaultCovers, admin_account_type, admin_allergies } = req.body
         const salt = await bcrypt.genSalt(12);
         const hashPassword = await bcrypt.hash(admin_password, salt)
-        const newUser = await registerAdmin(admin_name, hashPassword, admin_defaultCovers, admin_account_type, admin_allergies)
-        // const newDefaults = await registerDefaults(reg_defaultCovers, reg_allergies)
+        const newUser = await registerAdmin(admin_name, hashPassword, admin_account_type)
         // console.log(newUser)
         req.flash('success', 'New user created')
         res.redirect('/main')

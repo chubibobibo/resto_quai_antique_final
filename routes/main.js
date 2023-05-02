@@ -104,16 +104,16 @@ router.post('/reservations', catchAsync(async (req, res) => {
     // console.log(req.body)
     // console.log(req.session.user_id)
     const { reservation } = req.body
-    console.log(reservation)
+    // console.log(reservation)
     const user_id = req.session.user_id
     const covers = await reservationDate(reservation.date)
     const foundLogin = await login(reservation.email)
     const formCover = reservation.covers === "" ? reservation.covers = 0 : parseInt(reservation.covers)
     if (covers[0].total_covers !== null) {
         const totalCovers = parseInt(covers[0].total_covers) + formCover
-        console.log(covers)
-        console.log(formCover)
-        console.log(totalCovers)
+        // console.log(covers)
+        // console.log(formCover)
+        // console.log(totalCovers)
         if (totalCovers <= 20) {
             if (!user_id && reservation.covers === 0) {
                 await defaultReservation(reservation.name, reservation.email, reservation.date, reservation.time)
