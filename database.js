@@ -76,10 +76,10 @@ export async function getDesserts() {
 //for the insert query(this means that these are the datas that we 
 //will be accepting from the forms)
 //Update: included user_id
-export async function createReservation(date, time, covers, name, email, user_id, allergies) {
+export async function createReservation(name, email, covers, date, time, allergies, user_id) {
     const newReservation = await pool.query(
-        `INSERT INTO reservations(date, time, covers, name, email, user_id, allergies)
-        VALUES(?, ?, ?, ?, ?, ?, ?)`, [date, time, covers, name, email, user_id, allergies]
+        `INSERT INTO reservations(name, email, covers, date, time, allergies, user_id)
+        VALUES(?, ?, ?, ?, ?, ?, ?)`, [name, email, covers, date, time, allergies, user_id]
     )
     return newReservation[0]
 }
@@ -162,10 +162,10 @@ export async function removeMenu(id) {
 };
 
 //creating reservations without being logged in.
-export async function defaultReservation(date, time, covers, name, email) {
+export async function defaultReservation(name, email, date, time) {
     const defReservation = await pool.query(
-        `INSERT INTO reservations(date, time, covers, name, email)
-        VALUES(?, ?, ?, ?, ?)`, [date, time, covers, name, email]
+        `INSERT INTO reservations(name, email, date, time)
+        VALUES(?, ?, ?, ? )`, [name, email, date, time]
     )
     return defReservation[0]
 };

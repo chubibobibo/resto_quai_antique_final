@@ -27,15 +27,17 @@ const __dirname = path.dirname(__filename);
 
 
 //----middleware----
-const requireLogin = (async (req, res, next) => {
-    const admin = req.session.user_id
-    const specUser = await getUser(admin)
-    // console.log(specUser)
-    if (specUser[0].account_type !== 'admin') {
+const requireLogin = catchAsync(async (req, res, next) => {
+    if (req.session.user_id) {
+        const admin = req.session.user_id
+        const specUser = await getUser(admin)
+        // console.log(specUser)
+        if (specUser[0].account_type === 'admin') {
+            return next()
+        }
+    } else {
         req.flash('error', 'You need to be logged in')
         res.redirect('/user/login')
-    } else {
-        next()
     }
 })
 
@@ -83,6 +85,7 @@ router.get('/reservation', async (req, res) => {
     let today = new Date().toISOString().slice(0, 10)
     // console.log(today)
     const loggedUser = req.session.user_id
+    // console.log(loggedUser)
     if (req.session.user_id) {
         const foundUser = await getUser(loggedUser)
         res.render('./main/reservation.ejs', { today, foundUser, loggedUser })
@@ -101,25 +104,26 @@ router.post('/reservations', catchAsync(async (req, res) => {
     // console.log(req.body)
     // console.log(req.session.user_id)
     const { reservation } = req.body
+    console.log(reservation)
     const user_id = req.session.user_id
     const covers = await reservationDate(reservation.date)
     const foundLogin = await login(reservation.email)
-    const formCover = parseInt(reservation.covers)
+    const formCover = reservation.covers === "" ? reservation.covers = 0 : parseInt(reservation.covers)
     if (covers[0].total_covers !== null) {
         const totalCovers = parseInt(covers[0].total_covers) + formCover
-        // console.log(covers)
-        // console.log(formCover)
-        // console.log(totalCovers)
+        console.log(covers)
+        console.log(formCover)
+        console.log(totalCovers)
         if (totalCovers <= 20) {
-            if (!user_id) {
-                await defaultReservation(reservation.date, reservation.time, reservation.covers, reservation.name, reservation.email)
+            if (!user_id && reservation.covers === 0) {
+                await defaultReservation(reservation.name, reservation.email, reservation.date, reservation.time)
             }
-            else if (!reservation.allergies || !reservation.covers) {
-                const allergies = foundLogin[0].allergies
+            else if (user_id && reservation.covers === 0) {
+                // const allergies = foundLogin[0].allergies
                 const covers = foundLogin[0].covers
-                await createReservation(reservation.date, reservation.time, covers, reservation.name, reservation.email, user_id, allergies)
+                await createReservation(reservation.name, reservation.email, covers, reservation.date, reservation.time, reservation.allergies, user_id)
             } else {
-                await createReservation(reservation.date, reservation.time, reservation.covers, reservation.name, reservation.email, user_id, reservation.allergies)
+                await createReservation(reservation.name, reservation.email, reservation.covers, reservation.date, reservation.time, reservation.allergies, user_id)
             }
             // console.log(foundLogin)
             req.flash('success', 'Created a new reservation')
@@ -131,14 +135,14 @@ router.post('/reservations', catchAsync(async (req, res) => {
     } else {
         console.log(user_id)
         if (!user_id) {
-            await defaultReservation(reservation.date, reservation.time, reservation.covers, reservation.name, reservation.email)
+            await defaultReservation(reservation.name, reservation.email, reservation.covers, reservation.date, reservation.time)
         }
         else if (!reservation.allergies || !reservation.covers) {
             const allergies = foundLogin[0].allergies
             const covers = foundLogin[0].covers
-            await createReservation(reservation.date, reservation.time, covers, reservation.name, reservation.email, user_id, allergies)
+            await createReservation(reservation.name, reservation.email, covers, reservation.date, reservation.time, allergies, user_id)
         } else {
-            await createReservation(reservation.date, reservation.time, reservation.covers, reservation.name, reservation.email, user_id, reservation.allergies)
+            await createReservation(reservation.name, reservation.email, reservation.covers, reservation.date, reservation.time, reservation.allergies, user_id)
         }
         // console.log(foundLogin)
         req.flash('success', 'Created a new reservation')

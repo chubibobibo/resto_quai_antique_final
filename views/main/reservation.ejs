@@ -12,14 +12,20 @@
                     </p>
                 </div>
                 <!-- ----form---- -->
-                <form method="POST" action="/main/reservations" class="needs-validation">
+                <form method="POST" action="/main/reservations" class="needs-validation" novalidate>
                     <!-- ----name---- -->
                     <div class="row">
                         <div class="col-md-6">
                             <div class="mb-3">
                                 <label for="exampleInputEmail1" class="form-label">Name</label>
-                                <input type="text" class="form-control" id="exampleInputEmail1"
-                                    aria-describedby="emailHelp" name="reservation[name]">
+                                <input type="text" class="form-control" id="exampleInputEmail1" name="reservation[name]"
+                                    required>
+                                <div class="valid-feedback">
+                                    Looks good!
+                                </div>
+                                <div class="invalid-feedback">
+                                    Please enter a name.
+                                </div>
                             </div>
                         </div>
                         <!-- ----email---- -->
@@ -27,7 +33,13 @@
                             <div class="mb-3">
                                 <label for="exampleInputEmail1" class="form-label">Email address</label>
                                 <input type="email" class="form-control" id="exampleInputEmail1"
-                                    aria-describedby="emailHelp" name="reservation[email]">
+                                    name="reservation[email]" required>
+                                <div class="valid-feedback">
+                                    Looks good!
+                                </div>
+                                <div class="invalid-feedback">
+                                    Please enter a valid email.
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -47,14 +59,14 @@
                                     <option value="">Choose...</option>
                                     <option value="2">2 couverts</option>
                                     <option value="3">3 couverts</option>
-                                    <option value="4">4 Couverts</option>
-                                    <option value="5">5 Couverts</option>
+                                    <option value="4">4 couverts</option>
+                                    <option value="5">5 couverts</option>
                                 </select>
                                 <div class="valid-feedback">
                                     Looks good!
                                 </div>
                                 <div class="invalid-feedback">
-                                    Please enter a message in the textarea.
+                                    Please enter for how many people.
                                 </div>
                             </div>
                         </div>
@@ -73,7 +85,7 @@
                                     Looks good!
                                 </div>
                                 <div class="invalid-feedback">
-                                    Please enter a message in the textarea.
+                                    Please enter a date.
                                 </div>
                             </div>
                         </div>
@@ -113,7 +125,7 @@
                                     Looks good!
                                 </div>
                                 <div class="invalid-feedback">
-                                    Please enter a message in the textarea.
+                                    Please enter a time.
                                 </div>
                             </div>
                         </div>
@@ -122,7 +134,13 @@
                             <div class="form-floating mb-3">
                                 <%if(!loggedUser){%>
                                     <textarea class="form-control" placeholder="Leave a comment here" id="reg_allergies"
-                                        style="height: 100px" name="reservation[allergies]"></textarea>
+                                        style="height: 100px" name="reservation[allergies]" required></textarea>
+                                    <div class="valid-feedback">
+                                        Looks good!
+                                    </div>
+                                    <div class="invalid-feedback">
+                                        Please enter your allergies.
+                                    </div>
                                     <label for="reg_allergies">Allergies</label>
                                     <%} else {%>
                                         <textarea class="form-control" id="reg_allergies" style="height: 100px"
