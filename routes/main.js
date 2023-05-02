@@ -1,7 +1,7 @@
 import express from 'express';
 const router = express.Router({ mergeParams: true });
 import path from 'path';
-import { getAll, getEntrees, getPlats, getDesserts, createReservation, login, getPhoto, updatePhoto, addMenu, removeMenu, defaultReservation, reservationDate, getHours, specificHours, updateHours, getUser } from '../database.js';
+import { getAll, getEntrees, getPlats, getDesserts, createReservation, login, getPhoto, updatePhoto, addMenu, removeMenu, defaultReservation, reservationDate, getHours, specificHours, updateHours, getUser, idLogin } from '../database.js';
 import { fileURLToPath } from 'url';
 import catchAsync from '../utils/catchAsync.js'
 import multer from 'multer'
@@ -101,27 +101,31 @@ router.get('/reservation', async (req, res) => {
 //if data is not coming from the form.
 //UPDATE: defaultReservation for creating a reservation for an anonymous user.
 router.post('/reservations', catchAsync(async (req, res) => {
-    // console.log(req.body)
+    console.log(req.body)
     // console.log(req.session.user_id)
     const { reservation } = req.body
     // console.log(reservation)
     const user_id = req.session.user_id
     const covers = await reservationDate(reservation.date)
-    const foundLogin = await login(reservation.email)
+    // const foundLogin = await login(reservation.email)
+    const isIdLoggedIn = await idLogin(user_id)
     const formCover = reservation.covers === "" ? reservation.covers = 0 : parseInt(reservation.covers)
+    //There is an existing reservation
     if (covers[0].total_covers !== null) {
         const totalCovers = parseInt(covers[0].total_covers) + formCover
         // console.log(covers)
-        // console.log(formCover)
+        console.log(formCover)
         // console.log(totalCovers)
         if (totalCovers <= 20) {
-            if (!user_id && reservation.covers === 0) {
-                await defaultReservation(reservation.name, reservation.email, reservation.date, reservation.time)
-            }
-            else if (user_id && reservation.covers === 0) {
-                // const allergies = foundLogin[0].allergies
-                const covers = foundLogin[0].covers
+            //not logged in and no covers porovided
+            //logged in and no covers provided
+            if (isIdLoggedIn && formCover === 0) {
+                // console.log(isIdLoggedIn[0])
+                const covers = isIdLoggedIn[0].covers
                 await createReservation(reservation.name, reservation.email, covers, reservation.date, reservation.time, reservation.allergies, user_id)
+
+            } else if (!isIdLoggedIn && formCover === 0) {
+                await defaultReservation(reservation.name, reservation.email, reservation.date, reservation.time)
             } else {
                 await createReservation(reservation.name, reservation.email, reservation.covers, reservation.date, reservation.time, reservation.allergies, user_id)
             }
@@ -134,10 +138,10 @@ router.post('/reservations', catchAsync(async (req, res) => {
         }
     } else {
         console.log(user_id)
-        if (!user_id && reservation.covers === 0) {
+        if (!isIdLoggedIn && reservation.covers === 0) {
             await defaultReservation(reservation.name, reservation.email, reservation.date, reservation.time)
         }
-        else if (user_id && reservation.covers === 0) {
+        else if (isIdLoggedIn && reservation.covers === 0) {
             const allergies = foundLogin[0].allergies
             const covers = foundLogin[0].covers
             await createReservation(reservation.name, reservation.email, covers, reservation.date, reservation.time, allergies, user_id)
