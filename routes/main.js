@@ -86,7 +86,7 @@ router.get('/reservation', async (req, res) => {
     const user_id = req.session.user_id
     // console.log(loggedUser)
     if (user_id) {
-        const foundUser = await getUser(loggedUser)
+        const foundUser = await getUser(user_id)
         res.render('./main/reservation.ejs', { today, foundUser, user_id })
     } else {
         res.render('./main/reservation.ejs', { today, user_id })
