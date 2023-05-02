@@ -24,7 +24,7 @@ export async function getImages(id) {
 
 // selecting all images
 export async function getAll() {
-    const allImages = await pool.query(
+    const [allImages] = await pool.query(
         `SELECT * FROM images`
     )
     return allImages
