@@ -26,7 +26,7 @@ CREATE TABLE reservations(
     time TIME,
     user_id INT,
     FOREIGN KEY(user_id) REFERENCES users(id),
-    covers INT DEFAULT 0,
+    covers INT DEFAULT 1,
     name VARCHAR(100) NOT NULL,
     email VARCHAR(50) NOT NULL,
     allergies VARCHAR(300) NOT NULL DEFAULT 'None Specified',

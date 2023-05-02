@@ -18,9 +18,18 @@ Getting the node server running localy.
 - Create a new database.
 - Copy the `CREATE TABLE` queries in the `create_database.sql` found at the root of the project directory.
 - Copy the `INSERT INTO` queries in the `create_database.sql` to seed the initial values to the database. You can change this later.
-- Create a .env file
+- Create a .env file at the root of the project directory
 
     <img width="405" alt="image" src="https://user-images.githubusercontent.com/105818713/235437065-42613c24-91bd-4aee-a29c-ed3d125f7903.png">
+   
+- In `app.js` change the port to `3000`\
+
+<img width="338" alt="image" src="https://user-images.githubusercontent.com/105818713/235450880-ea181b0e-46d3-40ab-858c-2dbedaa68810.png">
+
+to:
+
+<img width="307" alt="image" src="https://user-images.githubusercontent.com/105818713/235450999-238c5b35-6544-4646-8dd4-ccba1e235d3b.png">
+
 
 - configure the database settings at `database.js` which can be found at the root of the project directory.
 
@@ -37,6 +46,8 @@ Getting the node server running localy.
 
       
 - Run `nodemon app.js` in the terminal.
+
+- Run locally using this link: (http://localhost:3000/main)
 
 ## Create an admin for managing the web app
 go to this link (http://localhost:3000/user/register/admin) to add a new admin user
