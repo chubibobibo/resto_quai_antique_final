@@ -55,7 +55,7 @@ router.post('/login', catchAsync(async (req, res) => {
     // searching by email
     const foundLogin = await login(login_name)
     console.log(foundLogin)
-    if (foundLogin) {
+    if (foundLogin[0]) {
         const loggedUser = await bcrypt.compare(login_password, foundLogin[0].password)
         // console.log(loggedUser)
         if (loggedUser) {
@@ -94,7 +94,7 @@ router.post('/register/admin', catchAsync(async (req, res) => {
         const hashPassword = await bcrypt.hash(admin_password, salt)
         const newUser = await registerAdmin(admin_name, hashPassword, admin_account_type)
         // console.log(newUser)
-        req.flash('success', 'New user created')
+        req.flash('success', 'An admin account was created')
         res.redirect('/main')
     } catch (err) {
         console.log(err)

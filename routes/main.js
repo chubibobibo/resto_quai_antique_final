@@ -51,10 +51,10 @@ router.get('/', async (req, res) => {
     const allDesserts = await getDesserts()
     const user_id = req.session.user_id
     if (user_id) {
-        const specUser = await getUser(admin)
+        const specUser = await getUser(user_id)
         const foundAdmin = specUser[0].account_type
         // console.log(specUser[0].account_type)
-        res.render('./main/index.ejs', { allImages, allHours, allPlats, allEntrees, allDesserts, foundAdmin })
+        res.render('./main/index.ejs', { allImages, allHours, allPlats, allEntrees, allDesserts, foundAdmin, user_id })
     } else {
         res.render('./main/index.ejs', { allImages, allHours, allPlats, allEntrees, allDesserts, user_id })
     }
@@ -68,10 +68,10 @@ router.get('/menu', catchAsync(async (req, res) => {
     const allDesserts = await getDesserts()
     const user_id = req.session.user_id
     if (user_id) {
-        const specUser = await getUser(admin)
+        const specUser = await getUser(user_id)
         const foundAdmin = specUser[0].account_type
         // console.log(specUser)
-        res.render('./main/menu.ejs', { allEntrees, allPlats, allDesserts, foundAdmin })
+        res.render('./main/menu.ejs', { allEntrees, allPlats, allDesserts, foundAdmin, user_id })
     } else {
         const foundAdmin = req.session.user_id
         res.render('./main/menu.ejs', { allEntrees, allPlats, allDesserts, user_id })
@@ -83,13 +83,13 @@ router.get('/reservation', async (req, res) => {
     //to limit selection of dates past the current date
     let today = new Date().toISOString().slice(0, 10)
     // console.log(today)
-    const loggedUser = req.session.user_id
+    const user_id = req.session.user_id
     // console.log(loggedUser)
-    if (req.session.user_id) {
+    if (user_id) {
         const foundUser = await getUser(loggedUser)
-        res.render('./main/reservation.ejs', { today, foundUser, loggedUser })
+        res.render('./main/reservation.ejs', { today, foundUser, user_id })
     } else {
-        res.render('./main/reservation.ejs', { today, loggedUser })
+        res.render('./main/reservation.ejs', { today, user_id })
     }
 })
 
@@ -116,8 +116,8 @@ router.post('/reservations', catchAsync(async (req, res) => {
         // console.log(totalCovers)
         if (totalCovers <= 20) {
             //logged in and no covers provided
-            if (!user_id) {
-                await defaultReservation(reservation.name, reservation.email, reservation.date, reservation.time)
+            if (!user_id && formCover === 0) {
+                await defaultReservation(reservation.name, reservation.email, reservation.date, reservation.time, reservation.allergies)
             } else if (isIdLoggedIn && formCover === 0) {
                 const covers = isIdLoggedIn[0].covers
                 await createReservation(reservation.name, reservation.email, covers, reservation.date, reservation.time, reservation.allergies, user_id)
@@ -133,8 +133,8 @@ router.post('/reservations', catchAsync(async (req, res) => {
         }
     } else {
         console.log(isIdLoggedIn)
-        if (!user_id) {
-            await defaultReservation(reservation.name, reservation.email, reservation.date, reservation.time)
+        if (!user_id && formCover === 0) {
+            await defaultReservation(reservation.name, reservation.email, reservation.date, reservation.time, reservation.allergies)
         }
         else if (isIdLoggedIn && reservation.covers === 0) {
             const allergies = isIdLoggedIn[0].allergies

@@ -162,10 +162,10 @@ export async function removeMenu(id) {
 };
 
 //creating reservations without being logged in.
-export async function defaultReservation(name, email, date, time) {
+export async function defaultReservation(name, email, date, time, allergies) {
     const defReservation = await pool.query(
-        `INSERT INTO reservations(name, email, date, time)
-        VALUES(?, ?, ?, ? )`, [name, email, date, time]
+        `INSERT INTO reservations(name, email, date, time, allergies)
+        VALUES(?, ?, ?, ?, ? )`, [name, email, date, time, allergies]
     )
     return defReservation[0]
 };
