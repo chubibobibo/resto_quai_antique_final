@@ -115,6 +115,14 @@ export async function login(email, password) {
     return foundLogin[0]
 };
 
+export async function idLogin(id) {
+    const idLoggedIn = await pool.query(
+        `SELECT * FROM users
+        WHERE id = ?`, [id]
+    )
+    return idLoggedIn[0]
+};
+
 // search a specific photo
 export async function getPhoto(id) {
     const newPhoto = await pool.query(
