@@ -18,7 +18,7 @@ export async function getImages(id) {
         WHERE id = ?`, [id]
     )
     return image[0]
-}
+};
 // // const result = await getImages(3)
 // // console.log(result)
 
@@ -28,7 +28,7 @@ export async function getAll() {
         SELECT * FROM images`
     )
     return allImages
-}
+};
 
 // selecting all menu
 export async function getMenu() {
@@ -37,7 +37,7 @@ export async function getMenu() {
         FROM menu`
     )
     return allMenu[0]
-}
+};
 // const result = await getMenu()
 // console.log(result)
 
@@ -48,7 +48,7 @@ export async function getEntrees() {
         WHERE category = 'Entrées'`
     )
     return allEntrees[0]
-}
+};
 // const resultEntrees = await getEntrees()
 // console.log(resultEntrees)
 
@@ -59,7 +59,7 @@ export async function getPlats() {
         WHERE category = 'Plats'`
     )
     return allPlats[0]
-}
+};
 
 // selecting desserts from menu
 export async function getDesserts() {
@@ -68,7 +68,7 @@ export async function getDesserts() {
         WHERE category = 'Desserts'`
     )
     return allDesserts[0]
-}
+};
 
 // inserting data from reservation form
 //logic for inserting a new reservation using the date,miditime, soirtime,
@@ -82,7 +82,7 @@ export async function createReservation(name, email, covers, date, time, allergi
         VALUES(?, ?, ?, ?, ?, ?, ?)`, [name, email, covers, date, time, allergies, user_id]
     )
     return newReservation[0]
-}
+};
 
 // inserting data from the register form
 //will expect a username and password to be passed in the function.
@@ -94,7 +94,7 @@ export async function register(email, password, covers, allergies) {
         VALUES(?, ?, ?, ?)`, [email, password, covers, allergies]
     )
     return newRegister[0]
-}
+};
 
 //adding admin user
 export async function registerAdmin(email, password, account_type) {
@@ -178,7 +178,7 @@ export async function reservationDate(date) {
         WHERE date = ?`, [date]
     )
     return specificDate[0]
-}
+};
 
 //selecting opening days and hours
 export async function getHours() {
@@ -187,7 +187,7 @@ export async function getHours() {
         FROM hours`
     )
     return allHours[0]
-}
+};
 
 // selecting specific days and hours
 export async function specificHours(id) {
@@ -197,7 +197,7 @@ export async function specificHours(id) {
         WHERE id = ?`, [id]
     )
     return specHours[0]
-}
+};
 
 //updating the hours table
 export async function updateHours(first_opening, first_closing, second_opening, second_closing, id) {
@@ -208,7 +208,7 @@ export async function updateHours(first_opening, first_closing, second_opening, 
         WHERE id = ?`, [first_opening, first_closing, second_opening, second_closing, id]
     )
     return updatedHours[0]
-}
+};
 
 //selecting specific user
 export async function getUser(id) {
@@ -217,4 +217,4 @@ export async function getUser(id) {
         WHERE id = ?`, [id]
     )
     return specUser[0]
-}
+};

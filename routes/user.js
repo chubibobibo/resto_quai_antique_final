@@ -1,7 +1,7 @@
 import express from 'express';
 const router = express.Router();
 import path from 'path';
-import { register, login, registerAdmin } from '../database.js';
+import { register, login, registerAdmin, idLogin } from '../database.js';
 import { fileURLToPath } from 'url';
 import catchAsync from '../utils/catchAsync.js'
 
@@ -55,7 +55,7 @@ router.post('/login', catchAsync(async (req, res) => {
     // searching by email
     const foundLogin = await login(login_name)
     console.log(foundLogin)
-    if (!foundLogin) {
+    if (foundLogin) {
         const loggedUser = await bcrypt.compare(login_password, foundLogin[0].password)
         // console.log(loggedUser)
         if (loggedUser) {
