@@ -27,7 +27,7 @@ export async function getAll() {
     const [allImages] = await pool.query(`
         SELECT * FROM images`
     )
-    return allImages
+    return allImages[0]
 };
 
 // selecting all menu
