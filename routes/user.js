@@ -52,13 +52,16 @@ router.get('/login', (req, res) => {
 
 router.post('/login', catchAsync(async (req, res) => {
     const { login_name, login_password } = req.body;
+    // searching by email
     const foundLogin = await login(login_name)
     // console.log(foundLogin)
     const loggedUser = await bcrypt.compare(login_password, foundLogin[0].password)
     if (loggedUser) {
         req.session.user_id = foundLogin[0].id
         req.flash('success', `Welcome ${foundLogin[0].email}`)
-    } else { req.flash('error', 'Invalid username or password') }
+    } else if (!loggedUser) {
+        req.flash('error', 'Invalid username or password')
+    }
     // console.log(req.session)
     // console.log(req.session.user_id)
     // console.log(foundLogin[0].allergies)

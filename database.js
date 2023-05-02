@@ -103,16 +103,8 @@ export async function registerAdmin(email, password, covers, account_type, aller
         VALUES(?, ?, ?, ?, ?)`, [email, password, covers, account_type, allergies]
     )
     return newRegisterAdmin[0]
-}
+};
 
-// adding default_covers and allergies
-// export async function registerDefaults(covers, allergies) {
-//     const defaults = await pool.query(
-//         `INSERT INTO users(covers, allergies)
-//         VALUES(?, ?)`, [covers, allergies]
-//     )
-//     return defaults[0]
-// }
 
 // searching for a username 
 export async function login(email, password) {

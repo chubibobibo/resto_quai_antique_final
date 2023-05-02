@@ -134,10 +134,10 @@ router.post('/reservations', catchAsync(async (req, res) => {
         }
     } else {
         console.log(user_id)
-        if (!user_id) {
-            await defaultReservation(reservation.name, reservation.email, reservation.covers, reservation.date, reservation.time)
+        if (!user_id && reservation.covers === 0) {
+            await defaultReservation(reservation.name, reservation.email, reservation.date, reservation.time)
         }
-        else if (!reservation.allergies || !reservation.covers) {
+        else if (user_id && reservation.covers === 0) {
             const allergies = foundLogin[0].allergies
             const covers = foundLogin[0].covers
             await createReservation(reservation.name, reservation.email, covers, reservation.date, reservation.time, allergies, user_id)
