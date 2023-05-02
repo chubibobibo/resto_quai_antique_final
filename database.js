@@ -97,10 +97,10 @@ export async function register(email, password, covers, allergies) {
 }
 
 //adding admin user
-export async function registerAdmin(email, password, covers, account_type, allergies) {
+export async function registerAdmin(email, password, account_type) {
     const newRegisterAdmin = await pool.query(
-        `INSERT INTO users(email, password, covers, account_type,allergies)
-        VALUES(?, ?, ?, ?, ?)`, [email, password, covers, account_type, allergies]
+        `INSERT INTO users(email, password, account_type)
+        VALUES(?, ?, ?)`, [email, password, account_type]
     )
     return newRegisterAdmin[0]
 };
