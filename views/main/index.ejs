@@ -43,7 +43,7 @@
             <div class="row mb-3 mt-5 d-flex">
                 <div class="col-md-6">
                     <img src="<%=allImages[2].imageUrl%>" alt="" class="col-md-6 w-100">
-                    <%if(foundAdmin==='admin' ){%>
+                    <%if(user_id && foundAdmin==='admin' ){%>
                         <a class="btn btn-success mt-2" href="/main/edit/<%=allImages[2].id%>">Upload</a>
                         <%}%>
                 </div>
@@ -57,7 +57,7 @@
             <div class="row mb-3 d-flex">
                 <div class="col-md-6 order-md-2">
                     <img src="<%=allImages[0].imageUrl%>" alt="" class="col-md-6 w-100">
-                    <%if(foundAdmin==='admin' ){%>
+                    <%if(user_id && foundAdmin==='admin' ){%>
                         <a class="btn btn-success mt-2" href="/main/edit/<%=allImages[0].id%>">Upload</a>
                         <%}%>
                 </div>
@@ -71,7 +71,7 @@
             <div class="row mb-3 d-flex">
                 <div class="col-md-6">
                     <img src="<%=allImages[1].imageUrl%>" alt="" class="col-md-6 w-100">
-                    <%if(foundAdmin==='admin' ){%>
+                    <%if(user_id && foundAdmin==='admin' ){%>
                         <a class="btn btn-success mt-2" href="/main/edit/<%=allImages[1].id%>">Upload</a>
                         <%}%>
                 </div>
@@ -93,7 +93,7 @@
                         <!-- monday -->
                         <tr>
                             <td colspan="5">
-                                <%if(foundAdmin==='admin' ){%>
+                                <%if(user_id && foundAdmin==='admin' ){%>
                                     <a class="btn btn-success me-3" href="/main/editHours/<%=allHours[0].id%>">Edit</a>
                                     <%}%>
                                         <%=allHours[0].day%>
@@ -109,7 +109,7 @@
                         <!-- tuesday -->
                         <tr>
                             <td colspan="5">
-                                <%if(foundAdmin==='admin' ){%>
+                                <%if(user_id && foundAdmin==='admin' ){%>
                                     <a class="btn btn-success me-3" href="/main/editHours/<%=allHours[1].id%>">Edit</a>
                                     <%}%>
                                         <%=allHours[1].day%>
@@ -124,7 +124,7 @@
                         <!-- wednesday -->
                         <tr>
                             <td colspan="5">
-                                <%if(foundAdmin==='admin' ){%>
+                                <%if(user_id && foundAdmin==='admin' ){%>
                                     <a class="btn btn-success me-3" href="/main/editHours/<%=allHours[2].id%>">Edit</a>
                                     <%}%>
                                         <%=allHours[2].day%>
@@ -136,7 +136,7 @@
                         <!-- thursday -->
                         <tr>
                             <td colspan="5">
-                                <%if(foundAdmin==='admin' ){%>
+                                <%if(user_id && foundAdmin==='admin' ){%>
                                     <a class="btn btn-success me-3" href="/main/editHours/<%=allHours[3].id%>">Edit</a>
                                     <%}%>
                                         <%=allHours[3].day%>
@@ -151,7 +151,7 @@
                         <!-- friday -->
                         <tr>
                             <td colspan="5">
-                                <%if(foundAdmin==='admin' ){%>
+                                <%if(user_id && foundAdmin==='admin' ){%>
                                     <a class="btn btn-success me-3" href="/main/editHours/<%=allHours[4].id%>">Edit</a>
                                     <%}%>
                                         <%=allHours[4].day%>
@@ -167,7 +167,7 @@
                         <!-- saturday -->
                         <tr>
                             <td colspan="5">
-                                <%if(foundAdmin==='admin' ){%>
+                                <%if(user_id && foundAdmin==='admin' ){%>
                                     <a class="btn btn-success me-3" href="/main/editHours/<%=allHours[5].id%>">Edit</a>
                                     <%}%>
                                         <%=allHours[5].day%>
@@ -180,7 +180,7 @@
                         <!-- sunday -->
                         <tr>
                             <td colspan="5">
-                                <%if(foundAdmin==='admin' ){%>
+                                <%if(user_id && foundAdmin==='admin' ){%>
                                     <a class="btn btn-success me-3" href="/main/editHours/<%=allHours[6].id%>">Edit</a>
                                     <%}%>
                                         <%=allHours[6].day%>

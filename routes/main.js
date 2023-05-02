@@ -49,35 +49,34 @@ router.get('/', async (req, res) => {
     const allEntrees = await getEntrees()
     const allPlats = await getPlats()
     const allDesserts = await getDesserts()
-    if (req.session.user_id) {
-        const admin = req.session.user_id
+    const user_id = req.session.user_id
+    if (user_id) {
         const specUser = await getUser(admin)
         const foundAdmin = specUser[0].account_type
         // console.log(specUser[0].account_type)
-        res.render('./main/index.ejs', { allImages, allHours, foundAdmin, allPlats, allEntrees, allDesserts })
+        res.render('./main/index.ejs', { allImages, allHours, allPlats, allEntrees, allDesserts, foundAdmin })
     } else {
-        const foundAdmin = req.session.user_id
-        res.render('./main/index.ejs', { allImages, allHours, foundAdmin, allPlats, allEntrees, allDesserts })
+        res.render('./main/index.ejs', { allImages, allHours, allPlats, allEntrees, allDesserts, user_id })
     }
 
 });
 //----menu----
 
-router.get('/menu', async (req, res) => {
+router.get('/menu', catchAsync(async (req, res) => {
     const allEntrees = await getEntrees()
     const allPlats = await getPlats()
     const allDesserts = await getDesserts()
-    if (req.session.user_id) {
-        const admin = req.session.user_id
+    const user_id = req.session.user_id
+    if (user_id) {
         const specUser = await getUser(admin)
         const foundAdmin = specUser[0].account_type
         // console.log(specUser)
         res.render('./main/menu.ejs', { allEntrees, allPlats, allDesserts, foundAdmin })
     } else {
         const foundAdmin = req.session.user_id
-        res.render('./main/menu.ejs', { allEntrees, allPlats, allDesserts, foundAdmin })
+        res.render('./main/menu.ejs', { allEntrees, allPlats, allDesserts, user_id })
     }
-})
+}))
 
 router.get('/reservation', async (req, res) => {
     // implementing current date to be passed on reservation.ejs 
