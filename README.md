@@ -44,4 +44,4 @@ Getting the node server running localy.
 go to this link (http://localhost:3000/user/register/admin) to add a new admin user
 
 ## Deployed link: 
-(https://resto-quai-antique-final.onrender.com)
+(https://newquaiantique.onrender.com/main)
