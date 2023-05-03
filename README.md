@@ -20,7 +20,8 @@ Getting the node server running localy.
 - Copy the `INSERT INTO` queries in the `create_database.sql` to seed the initial values to the database. You can change this later.
 - Create a .env file at the root of the project directory and configure it with the credentials from your database
 
-    <img width="405" alt="image" src="https://user-images.githubusercontent.com/105818713/235437065-42613c24-91bd-4aee-a29c-ed3d125f7903.png">
+    <img width="415" alt="image" src="https://user-images.githubusercontent.com/105818713/235885303-89a7bbe9-8866-4f83-9b23-81cb55e84e2a.png">
+
    
 - In `app.js` change the port to `3000`\
 
