@@ -139,7 +139,7 @@ router.post('/reservations', catchAsync(async (req, res) => {
         else if (isIdLoggedIn && reservation.covers === 0) {
             const allergies = isIdLoggedIn[0].allergies
             const covers = isIdLoggedIn[0].covers
-            await createReservation(reservation.name, reservation.email, covers, reservation.date, reservation.time, allergies, user_id)
+            await createReservation(reservation.name, reservation.email, covers, reservation.date, reservation.time, reservation.allergies, user_id)
         } else {
             await createReservation(reservation.name, reservation.email, reservation.covers, reservation.date, reservation.time, reservation.allergies, user_id)
         }

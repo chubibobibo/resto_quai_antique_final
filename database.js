@@ -184,6 +184,7 @@ export async function reservationDate(date) {
 export async function getHours() {
     const allHours = await pool.query(
         `SELECT
+        id,
         day,
         TIME_FORMAT(first_opening, "%H %i") AS first_opening,
         TIME_FORMAT(first_closing, "%H %i") AS first_closing,
