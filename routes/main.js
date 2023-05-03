@@ -82,14 +82,14 @@ router.get('/reservation', async (req, res) => {
     // implementing current date to be passed on reservation.ejs 
     //to limit selection of dates past the current date
     let today = new Date().toISOString().slice(0, 10)
-    // console.log(today)
+    const foundCovers = await reservationDate(today)
     const user_id = req.session.user_id
     // console.log(loggedUser)
     if (user_id) {
         const foundUser = await getUser(user_id)
-        res.render('./main/reservation.ejs', { today, foundUser, user_id })
+        res.render('./main/reservation.ejs', { today, foundUser, user_id, foundCovers })
     } else {
-        res.render('./main/reservation.ejs', { today, user_id })
+        res.render('./main/reservation.ejs', { today, user_id, foundCovers })
     }
 })
 
