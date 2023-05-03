@@ -11,6 +11,14 @@
                         retard de plus de 20 min votre table sera donnée à un autre client
                     </p>
                 </div>
+                <div>
+                    <!-- <p id="output1">Reservations left:</p> -->
+                    <%if(foundCovers[0].total_covers < 20){%>
+                        <h3>Reservations available</h3>
+                        <%} else{%>
+                            <h3>Reservations full</h3>
+                            <%}%>
+                </div>
                 <!-- ----form---- -->
                 <form method="POST" action="/main/reservations" class="needs-validation" novalidate>
                     <!-- ----name---- -->
