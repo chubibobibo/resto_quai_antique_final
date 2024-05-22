@@ -1,8 +1,9 @@
---Creating the database
-CREATE DATABASE resto_quai_antique;
-SHOW DATABASES;
-USE resto_quai_antique;
+-- create database
+CREATE DATABASE new_quai_db;
+USE new_quai_db;
 
+
+-- ----create tables----
 -- IMAGES TABLE
 CREATE TABLE images (
 	id INT PRIMARY KEY AUTO_INCREMENT,
@@ -14,23 +15,26 @@ CREATE TABLE users (
 	id INT PRIMARY KEY AUTO_INCREMENT,
     email VARCHAR(50) NOT NULL UNIQUE,
     password VARCHAR(100) NOT NULL UNIQUE,
-    covers INT NOT NULL,
-    allergies VARCHAR(300) NOT NULL,
+    covers INT NOT NULL DEFAULT 0,
+    allergies VARCHAR(300) NOT NULL DEFAULT 'None specified',
     account_type VARCHAR(10) NOT NULL DEFAULT 'client'
 );
 
 -- RESERVATIONS TABLE
 CREATE TABLE reservations(
 	id INT PRIMARY KEY AUTO_INCREMENT,
+	name VARCHAR(100) NOT NULL,
+    email VARCHAR(50) NOT NULL,
     date DATE NOT NULL,
-    time TIME,
-    user_id INT,
+    time TIME NOT NULL,
     FOREIGN KEY(user_id) REFERENCES users(id),
     covers INT NOT NULL DEFAULT 1,
+
     name VARCHAR(100) NOT NULL,
     email VARCHAR(50) NOT NULL,
     allergies VARCHAR(300) NOT NULL DEFAULT 'None Specified',
     created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
+
 );
 
 -- MENU TABLE
@@ -41,6 +45,7 @@ CREATE TABLE menu(
     price DECIMAL(5,2),
     category VARCHAR(50)
 );
+
 -- ----hours table----
 CREATE TABLE hours (
 	id INT PRIMARY KEY AUTO_INCREMENT,
@@ -50,8 +55,8 @@ CREATE TABLE hours (
     second_opening TIME,
     second_closing TIME
     );
-
-------------------------------------------------
+    
+-- ----seeding the database----
 -- Inserting to menu table
 INSERT INTO menu (title, description, price, category)
 VALUE
@@ -85,3 +90,29 @@ VALUES
 ('https://images.unsplash.com/photo-1515003197210-e0cd71810b5f?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2070&q=80'),
 ('https://images.unsplash.com/photo-1476224203421-9ac39bcb3327?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1770&q=80'),
 ('https://images.unsplash.com/photo-1455619452474-d2be8b1e70cd?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1770&q=80');
+
+-- Inserting to reservations
+INSERT INTO reservations
+(name,email,date,time,covers,allergies,created_at)
+VALUES ('asdasd', 'asdasda@gmail.com', '2023-05-03','19:15:00', 5,'shrimp', '2023-05-03 12:39:20'),
+('asdasd', 'asdasda@gmail.com', '2023-05-03','19:15:00', 5,'shrimp', '2023-05-03 12:39:20'),
+('asdasd', 'asdasda@gmail.com', '2023-05-03','19:15:00', 5,'shrimp', '2023-05-03 12:39:20'),
+('asdasd', 'asdasda@gmail.com', '2023-05-03','19:15:00', 5,'shrimp', '2023-05-03 12:39:20');
+
+
+
+-- ---queries---
+-- SELECT * FROM reservations;
+-- SELECT * FROM users;
+
+-- ALTER TABLE users
+-- MODIFY COLUMN allergies VARCHAR(300) NOT NULL DEFAULT 'None specified';
+
+-- ALTER TABLE users
+-- MODIFY COLUMN covers INT NOT NULL DEFAULT 0;
+
+-- DELETE t1 FROM menu t1
+-- INNER JOIN menu t2
+-- WHERE t1.id < t2.id 
+-- AND t1.title = t2.title;
+

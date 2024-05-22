@@ -1,7 +1,7 @@
 import express from 'express';
 const router = express.Router();
 import path from 'path';
-import { register, login, registerAdmin } from '../database.js';
+import { register, login, registerAdmin, idLogin } from '../database.js';
 import { fileURLToPath } from 'url';
 import catchAsync from '../utils/catchAsync.js'
 
@@ -57,16 +57,18 @@ router.get('/login', (req, res) => {
 
 router.post('/login', catchAsync(async (req, res) => {
     const { login_name, login_password } = req.body;
+    // searching by email
     const foundLogin = await login(login_name)
+
     const loggedUser = await bcrypt.compare(login_password, foundLogin[0].password)
     if (loggedUser) {
         req.session.user_id = foundLogin[0].id
         req.flash('success', `Welcome ${foundLogin[0].email}`)
     } else { req.flash('error', 'Invalid username or password') }
+
     // console.log(req.session)
     // console.log(req.session.user_id)
     // console.log(foundLogin[0].allergies)
-    res.redirect('/main')
 }))
 
 // logging out a user
@@ -86,10 +88,9 @@ router.post('/register/admin', catchAsync(async (req, res) => {
         const { admin_name, admin_password, admin_defaultCovers, admin_account_type, admin_allergies } = req.body
         const salt = await bcrypt.genSalt(12);
         const hashPassword = await bcrypt.hash(admin_password, salt)
-        const newUser = await registerAdmin(admin_name, hashPassword, admin_defaultCovers, admin_account_type, admin_allergies)
-        // const newDefaults = await registerDefaults(reg_defaultCovers, reg_allergies)
+        const newUser = await registerAdmin(admin_name, hashPassword, admin_account_type)
         // console.log(newUser)
-        req.flash('success', 'New user created')
+        req.flash('success', 'An admin account was created')
         res.redirect('/main')
     } catch (err) {
         console.log(err)

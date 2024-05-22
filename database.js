@@ -8,7 +8,7 @@ const pool = mysql.createPool({
     user: process.env.MYSQL_USER,
     password: process.env.MYSQL_PASSWORD,
     database: process.env.MYSQL_DATABASE,
-    port: process.env.DB_PORT
+    port: process.env.MYSQL_PORT
 }).promise()
 
 
@@ -18,17 +18,18 @@ export async function getImages(id) {
         WHERE id = ?`, [id]
     )
     return image[0]
-}
+};
 // // const result = await getImages(3)
 // // console.log(result)
 
 // selecting all images
 export async function getAll() {
-    const [allImages] = await pool.query(`
-        SELECT * FROM images`
+    const [allImages] = await pool.query(
+        `SELECT * FROM images`
     )
     return allImages[0]
 }
+
 
 // selecting all menu
 export async function getMenu() {
@@ -37,7 +38,7 @@ export async function getMenu() {
         FROM menu`
     )
     return allMenu[0]
-}
+};
 // const result = await getMenu()
 // console.log(result)
 
@@ -51,6 +52,7 @@ export async function getEntrees() {
 }
 
 
+
 // selecting plats from the menu
 export async function getPlats() {
     const allPlats = await pool.query(
@@ -58,7 +60,7 @@ export async function getPlats() {
         WHERE category = 'Plats'`
     )
     return allPlats[0]
-}
+};
 
 // selecting desserts from menu
 export async function getDesserts() {
@@ -67,7 +69,7 @@ export async function getDesserts() {
         WHERE category = 'Desserts'`
     )
     return allDesserts[0]
-}
+};
 
 // inserting data from reservation form
 //logic for inserting a new reservation using the date,miditime, soirtime,
@@ -75,13 +77,13 @@ export async function getDesserts() {
 //for the insert query(this means that these are the datas that we 
 //will be accepting from the forms)
 //Update: included user_id
-export async function createReservation(date, time, covers, name, email, user_id, allergies) {
+export async function createReservation(name, email, covers, date, time, allergies, user_id) {
     const newReservation = await pool.query(
-        `INSERT INTO reservations(date, time, covers, name, email, user_id, allergies)
-        VALUES(?, ?, ?, ?, ?, ?, ?)`, [date, time, covers, name, email, user_id, allergies]
+        `INSERT INTO reservations(name, email, covers, date, time, allergies, user_id)
+        VALUES(?, ?, ?, ?, ?, ?, ?)`, [name, email, covers, date, time, allergies, user_id]
     )
     return newReservation[0]
-}
+};
 
 // inserting data from the register form
 //will expect a username and password to be passed in the function.
@@ -93,25 +95,17 @@ export async function register(email, password, covers, allergies) {
         VALUES(?, ?, ?, ?)`, [email, password, covers, allergies]
     )
     return newRegister[0]
-}
+};
 
 //adding admin user
-export async function registerAdmin(email, password, covers, account_type, allergies) {
+export async function registerAdmin(email, password, account_type) {
     const newRegisterAdmin = await pool.query(
-        `INSERT INTO users(email, password, covers, account_type,allergies)
-        VALUES(?, ?, ?, ?, ?)`, [email, password, covers, account_type, allergies]
+        `INSERT INTO users(email, password, account_type)
+        VALUES(?, ?, ?)`, [email, password, account_type]
     )
     return newRegisterAdmin[0]
-}
+};
 
-// adding default_covers and allergies
-// export async function registerDefaults(covers, allergies) {
-//     const defaults = await pool.query(
-//         `INSERT INTO users(covers, allergies)
-//         VALUES(?, ?)`, [covers, allergies]
-//     )
-//     return defaults[0]
-// }
 
 // searching for a username 
 export async function login(email, password) {
@@ -120,6 +114,14 @@ export async function login(email, password) {
         WHERE email = ?`, [email]
     )
     return foundLogin[0]
+};
+
+export async function idLogin(id) {
+    const idLoggedIn = await pool.query(
+        `SELECT * FROM users
+        WHERE id = ?`, [id]
+    )
+    return idLoggedIn[0]
 };
 
 // search a specific photo
@@ -161,10 +163,10 @@ export async function removeMenu(id) {
 };
 
 //creating reservations without being logged in.
-export async function defaultReservation(date, time, name, email) {
+export async function defaultReservation(name, email, date, time, allergies) {
     const defReservation = await pool.query(
-        `INSERT INTO reservations(date, time, name, email)
-        VALUES(?, ?, ?, ?)`, [date, time, name, email]
+        `INSERT INTO reservations(name, email, date, time, allergies)
+        VALUES(?, ?, ?, ?, ? )`, [name, email, date, time, allergies]
     )
     return defReservation[0]
 };
@@ -177,16 +179,22 @@ export async function reservationDate(date) {
         WHERE date = ?`, [date]
     )
     return specificDate[0]
-}
+};
 
 //selecting opening days and hours
 export async function getHours() {
     const allHours = await pool.query(
-        `SELECT *
+        `SELECT
+        id,
+        day,
+        TIME_FORMAT(first_opening, "%H %i") AS first_opening,
+        TIME_FORMAT(first_closing, "%H %i") AS first_closing,
+        TIME_FORMAT(second_opening, "%H %i") AS second_opening,
+        TIME_FORMAT(second_closing, "%H  %i") AS second_closing 
         FROM hours`
     )
     return allHours[0]
-}
+};
 
 // selecting specific days and hours
 export async function specificHours(id) {
@@ -196,7 +204,7 @@ export async function specificHours(id) {
         WHERE id = ?`, [id]
     )
     return specHours[0]
-}
+};
 
 //updating the hours table
 export async function updateHours(first_opening, first_closing, second_opening, second_closing, id) {
@@ -207,7 +215,7 @@ export async function updateHours(first_opening, first_closing, second_opening, 
         WHERE id = ?`, [first_opening, first_closing, second_opening, second_closing, id]
     )
     return updatedHours[0]
-}
+};
 
 //selecting specific user
 export async function getUser(id) {
@@ -216,4 +224,4 @@ export async function getUser(id) {
         WHERE id = ?`, [id]
     )
     return specUser[0]
-}
+};

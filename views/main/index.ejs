@@ -43,11 +43,11 @@
             <div class="row mb-3 mt-5 d-flex">
                 <div class="col-md-6">
                     <img src="<%=allImages[2].imageUrl%>" alt="" class="col-md-6 w-100">
-                    <%if(foundAdmin==='admin' ){%>
+                    <%if(user_id && foundAdmin==='admin' ){%>
                         <a class="btn btn-success mt-2" href="/main/edit/<%=allImages[2].id%>">Upload</a>
                         <%}%>
                 </div>
-                <div class="col-md-6 d-flex flex-column" style="transform: translateY(5rem);">
+                <div class="col-md-6 d-flex flex-column mt-5">
                     <p style="text-align: center;">
                         <%=allEntrees[0].description%>
                     </p>
@@ -57,11 +57,11 @@
             <div class="row mb-3 d-flex">
                 <div class="col-md-6 order-md-2">
                     <img src="<%=allImages[0].imageUrl%>" alt="" class="col-md-6 w-100">
-                    <%if(foundAdmin==='admin' ){%>
+                    <%if(user_id && foundAdmin==='admin' ){%>
                         <a class="btn btn-success mt-2" href="/main/edit/<%=allImages[0].id%>">Upload</a>
                         <%}%>
                 </div>
-                <div class="col-md-6 d-flex flex-column" style="transform: translateY(5rem);">
+                <div class="col-md-6 d-flex flex-column mt-5">
                     <p style="text-align: center;">
                         <%=allPlats[0].description%>
                     </p>
@@ -71,11 +71,11 @@
             <div class="row mb-3 d-flex">
                 <div class="col-md-6">
                     <img src="<%=allImages[1].imageUrl%>" alt="" class="col-md-6 w-100">
-                    <%if(foundAdmin==='admin' ){%>
+                    <%if(user_id && foundAdmin==='admin' ){%>
                         <a class="btn btn-success mt-2" href="/main/edit/<%=allImages[1].id%>">Upload</a>
                         <%}%>
                 </div>
-                <div class="col-md-6 d-flex flex-column" style="transform: translateY(5rem);">
+                <div class="col-md-6 d-flex flex-column mt-5">
                     <p style="text-align: center;">
                         <%=allDesserts[0].description%>
                     </p>
@@ -93,13 +93,13 @@
                         <!-- monday -->
                         <tr>
                             <td colspan="5">
-                                <%if(foundAdmin==='admin' ){%>
+                                <%if(user_id && foundAdmin==='admin' ){%>
                                     <a class="btn btn-success me-3" href="/main/editHours/<%=allHours[0].id%>">Edit</a>
                                     <%}%>
                                         <%=allHours[0].day%>
                             </td>
                             <td></td>
-                            <td style="color:rgb(120, 76, 60); padding-left: 6rem;">
+                            <td style="color:rgb(120, 76, 60); padding-left: 2rem;">
                                 <%=allHours[0].first_opening%> - <%=allHours[0].first_closing%>
                                         <br>
                                         <%=allHours[0].second_opening%> - <%=allHours[0].second_closing%>
@@ -109,13 +109,13 @@
                         <!-- tuesday -->
                         <tr>
                             <td colspan="5">
-                                <%if(foundAdmin==='admin' ){%>
+                                <%if(user_id && foundAdmin==='admin' ){%>
                                     <a class="btn btn-success me-3" href="/main/editHours/<%=allHours[1].id%>">Edit</a>
                                     <%}%>
                                         <%=allHours[1].day%>
                             </td>
                             <td></td>
-                            <td style="color:rgb(120, 76, 60); padding-left: 6rem;">
+                            <td style="color:rgb(120, 76, 60); padding-left: 2rem;">
                                 <%=allHours[1].first_opening%> - <%=allHours[1].first_closing%>
                                         <br>
                                         <%=allHours[1].second_opening%> - <%=allHours[1].second_closing%>
@@ -124,25 +124,25 @@
                         <!-- wednesday -->
                         <tr>
                             <td colspan="5">
-                                <%if(foundAdmin==='admin' ){%>
+                                <%if(user_id && foundAdmin==='admin' ){%>
                                     <a class="btn btn-success me-3" href="/main/editHours/<%=allHours[2].id%>">Edit</a>
                                     <%}%>
                                         <%=allHours[2].day%>
                             </td>
                             <td></td>
-                            <td style="color:rgb(120, 76, 60); padding-left: 6rem;">Closed
+                            <td style="color:rgb(120, 76, 60); padding-left: 2rem;">Closed
                             </td>
                         </tr>
                         <!-- thursday -->
                         <tr>
                             <td colspan="5">
-                                <%if(foundAdmin==='admin' ){%>
+                                <%if(user_id && foundAdmin==='admin' ){%>
                                     <a class="btn btn-success me-3" href="/main/editHours/<%=allHours[3].id%>">Edit</a>
                                     <%}%>
                                         <%=allHours[3].day%>
                             </td>
                             <td></td>
-                            <td style="color:rgb(120, 76, 60); padding-left: 6rem;">
+                            <td style="color:rgb(120, 76, 60); padding-left: 2rem;">
                                 <%=allHours[3].first_opening%> - <%=allHours[3].first_closing%>
                                         <br>
                                         <%=allHours[3].second_opening%> - <%=allHours[3].second_closing%>
@@ -151,13 +151,13 @@
                         <!-- friday -->
                         <tr>
                             <td colspan="5">
-                                <%if(foundAdmin==='admin' ){%>
+                                <%if(user_id && foundAdmin==='admin' ){%>
                                     <a class="btn btn-success me-3" href="/main/editHours/<%=allHours[4].id%>">Edit</a>
                                     <%}%>
                                         <%=allHours[4].day%>
                             </td>
                             <td></td>
-                            <td style="color:rgb(120, 76, 60); padding-left: 6rem;">
+                            <td style="color:rgb(120, 76, 60); padding-left: 2rem;">
                                 <%=allHours[4].first_opening%> - <%=allHours[4].first_closing%>
                                         <br>
                                         <%=allHours[4].second_opening%> - <%=allHours[4].second_closing%>
@@ -167,26 +167,26 @@
                         <!-- saturday -->
                         <tr>
                             <td colspan="5">
-                                <%if(foundAdmin==='admin' ){%>
+                                <%if(user_id && foundAdmin==='admin' ){%>
                                     <a class="btn btn-success me-3" href="/main/editHours/<%=allHours[5].id%>">Edit</a>
                                     <%}%>
                                         <%=allHours[5].day%>
                             </td>
                             <td></td>
-                            <td style="color:rgb(120, 76, 60); padding-left: 6rem;">
+                            <td style="color:rgb(120, 76, 60); padding-left: 2rem;">
                                 <%=allHours[5].first_opening%> - <%=allHours[5].first_closing%>
                             </td>
                         </tr>
                         <!-- sunday -->
                         <tr>
                             <td colspan="5">
-                                <%if(foundAdmin==='admin' ){%>
+                                <%if(user_id && foundAdmin==='admin' ){%>
                                     <a class="btn btn-success me-3" href="/main/editHours/<%=allHours[6].id%>">Edit</a>
                                     <%}%>
                                         <%=allHours[6].day%>
                             </td>
                             <td></td>
-                            <td style="color:rgb(120, 76, 60); padding-left: 6rem;">
+                            <td style="color:rgb(120, 76, 60); padding-left: 2rem;">
                                 <%=allHours[6].first_opening%> - <%=allHours[6].first_closing%>
                             </td>
                         </tr>
