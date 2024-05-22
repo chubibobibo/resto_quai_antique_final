@@ -50,8 +50,10 @@ app.use(
         cookie: {
             //setup expiry for the session cookie
             //1000ms to 1s to 1min to 24hrs to 1wk
+
             expires: Date.now() + 1000 * 60 * 60 * 24 * 7,
             maxAge: 1000 * 60 * 60 * 24 * 7,
+            secure: true,
             httpOnly: true // sets cookie so that it is impossible to access clientside
         }
     })
@@ -62,6 +64,7 @@ app.use(
 app.use((req, res, next) => {
     res.locals.success = req.flash('success');
     res.locals.error = req.flash('error')
+    //checking for logged user
     res.locals.isLoggedUser = req.session.user_id
     next()
 })

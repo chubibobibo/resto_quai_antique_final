@@ -34,11 +34,16 @@ router.post('/register', catchAsync(async (req, res) => {
         const { reg_name, reg_password, reg_defaultCovers, reg_allergies } = req.body
         const salt = await bcrypt.genSalt(12);
         const hashPassword = await bcrypt.hash(reg_password, salt)
-        const newUser = await register(reg_name, hashPassword, reg_defaultCovers, reg_allergies)
-        // const newDefaults = await registerDefaults(reg_defaultCovers, reg_allergies)
-        // console.log(newUser)
-        req.flash('success', 'New user created')
-        res.redirect('/main')
+        //UPDATE: flashing error if email exists upon registering
+        const foundUser = await login(reg_name);
+        if (reg_name !== foundUser.email) {
+            const newUser = await register(reg_name, hashPassword, reg_defaultCovers, reg_allergies)
+            req.flash('success', 'New user created')
+            res.redirect('/main')
+        } else {
+            req.flash('error', 'email already exists')
+        }
+        //end of UPDATE
     } catch (err) {
         console.log(err)
         res.status(500).send('Ooops there is a problem')
@@ -53,7 +58,6 @@ router.get('/login', (req, res) => {
 router.post('/login', catchAsync(async (req, res) => {
     const { login_name, login_password } = req.body;
     const foundLogin = await login(login_name)
-    // console.log(foundLogin)
     const loggedUser = await bcrypt.compare(login_password, foundLogin[0].password)
     if (loggedUser) {
         req.session.user_id = foundLogin[0].id

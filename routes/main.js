@@ -6,11 +6,6 @@ import { fileURLToPath } from 'url';
 import catchAsync from '../utils/catchAsync.js'
 import multer from 'multer'
 import * as cloudinaryV2 from 'cloudinary'
-import cloudinary from '../cloudinary/index.js'
-import methodOverride from 'method-override'
-
-
-
 
 // configure the storage object where to store the images
 // cb is a callback function 
@@ -20,11 +15,9 @@ const storage = multer.diskStorage({
     }
 })
 
-
 const upload = multer({ storage: storage })
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
-
 
 //----middleware----
 const requireLogin = (async (req, res, next) => {
@@ -42,6 +35,7 @@ const requireLogin = (async (req, res, next) => {
 // ----routes----
 //----index----
 router.get('/', async (req, res) => {
+    //data from database
     const allImages = await getAll()
     const allHours = await getHours()
     const allEntrees = await getEntrees()
@@ -92,36 +86,28 @@ router.get('/reservation', async (req, res) => {
 })
 
 //creating reservation
-//UPDATE: searched the email from the reservation form to find user's
-//default allergies and covers.
-//use the found default allergies and covers as the value
-//if data is not coming from the form.
+//UPDATE: searched the email from the reservation form to find user's default allergies and covers.
+//use the found default allergies and covers as the value if data is not coming from the form.
 //UPDATE: defaultReservation for creating a reservation for an anonymous user.
 router.post('/reservations', catchAsync(async (req, res) => {
-    // console.log(req.body)
-    // console.log(req.session.user_id)
     const { reservation } = req.body
     const user_id = req.session.user_id
-    const covers = await reservationDate(reservation.date)
     const foundLogin = await login(reservation.email)
     const formCover = parseInt(reservation.covers)
+    const covers = await reservationDate(reservation.date)//sum of all the covers in a specific date
     if (covers[0].total_covers !== null) {
         const totalCovers = parseInt(covers[0].total_covers) + formCover
-        // console.log(covers)
-        // console.log(formCover)
-        // console.log(totalCovers)
         if (totalCovers <= 20) {
             if (!user_id) {
                 await defaultReservation(reservation.date, reservation.time, reservation.name, reservation.email)
             }
             else if (!reservation.allergies || !reservation.covers) {
-                const allergies = foundLogin[0].allergies
-                const covers = foundLogin[0].covers
+                const allergies = foundLogin[0].allergies//default allergy
+                const covers = foundLogin[0].covers//default cover
                 await createReservation(reservation.date, reservation.time, covers, reservation.name, reservation.email, user_id, allergies)
             } else {
                 await createReservation(reservation.date, reservation.time, reservation.covers, reservation.name, reservation.email, user_id, reservation.allergies)
             }
-            // console.log(foundLogin)
             req.flash('success', 'Created a new reservation')
             res.redirect('/main')
         } else {
@@ -140,7 +126,6 @@ router.post('/reservations', catchAsync(async (req, res) => {
         } else {
             await createReservation(reservation.date, reservation.time, reservation.covers, reservation.name, reservation.email, user_id, reservation.allergies)
         }
-        // console.log(foundLogin)
         req.flash('success', 'Created a new reservation')
         res.redirect('/main')
     }
