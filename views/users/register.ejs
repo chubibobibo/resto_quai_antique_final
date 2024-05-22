@@ -6,14 +6,20 @@
                 <div class="card-body">
                     <h5 class="card-title">Create new user</h5>
                     <!-- ----register form---- -->
-                    <form method="POST" action="/user/register">
+                    <form method="POST" class="needs-validation" action="/user/register" novalidate>
                         <div class="mb-3">
                             <label for="email" class="form-label">Email</label>
-                            <input type="email" class="form-control" id="email" name="reg_name">
+                            <input type="email" class="form-control" id="email" name="reg_name" required>
+                            <div class="valid-feedback">
+                                Looks good!
+                            </div>
+                            <div class="invalid-feedback">
+                                Please enter a name.
+                            </div>
                         </div>
                         <div class="mb-3">
                             <label for="password" class="form-label">Password</label>
-                            <input type="password" class="form-control" id="password" name="reg_password">
+                            <input type="password" class="form-control" id="password" name="reg_password" required>
                         </div>
                         <!-- default covers -->
                         <div>
@@ -45,9 +51,15 @@
                         <div class="form-floating mb-3">
                             <textarea class="form-control" placeholder="Leave a comment here" id="reg_allergies"
                                 style="height: 100px" name="reg_allergies" required></textarea>
+                            <div class="valid-feedback">
+                                Looks good!
+                            </div>
+                            <div class="invalid-feedback">
+                                Please enter a name.
+                            </div>
                             <label for="reg_allergies">Allergies</label>
                         </div>
-                        <button type="submit" class="btn btn-primary">Register</button>
+                        <button type="submit" class="btn btn-success">Register</button>
                     </form>
                 </div>
             </div>

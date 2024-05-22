@@ -20,15 +20,17 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 //----middleware----
-const requireLogin = (async (req, res, next) => {
-    const admin = req.session.user_id
-    const specUser = await getUser(admin)
-    // console.log(specUser)
-    if (specUser[0].account_type !== 'admin') {
+const requireLogin = catchAsync(async (req, res, next) => {
+    if (req.session.user_id) {
+        const admin = req.session.user_id
+        const specUser = await getUser(admin)
+        // console.log(specUser)
+        if (specUser[0].account_type === 'admin') {
+            return next()
+        }
+    } else {
         req.flash('error', 'You need to be logged in')
         res.redirect('/user/login')
-    } else {
-        next()
     }
 })
 
@@ -41,47 +43,47 @@ router.get('/', async (req, res) => {
     const allEntrees = await getEntrees()
     const allPlats = await getPlats()
     const allDesserts = await getDesserts()
-    if (req.session.user_id) {
-        const admin = req.session.user_id
-        const specUser = await getUser(admin)
+    const user_id = req.session.user_id
+    if (user_id) {
+        const specUser = await getUser(user_id)
         const foundAdmin = specUser[0].account_type
         // console.log(specUser[0].account_type)
-        res.render('./main/index.ejs', { allImages, allHours, foundAdmin, allPlats, allEntrees, allDesserts })
+        res.render('./main/index.ejs', { allImages, allHours, allPlats, allEntrees, allDesserts, foundAdmin, user_id })
     } else {
-        const foundAdmin = req.session.user_id
-        res.render('./main/index.ejs', { allImages, allHours, foundAdmin, allPlats, allEntrees, allDesserts })
+        res.render('./main/index.ejs', { allImages, allHours, allPlats, allEntrees, allDesserts, user_id })
     }
 
 });
 //----menu----
 
-router.get('/menu', async (req, res) => {
+router.get('/menu', catchAsync(async (req, res) => {
     const allEntrees = await getEntrees()
     const allPlats = await getPlats()
     const allDesserts = await getDesserts()
-    if (req.session.user_id) {
-        const admin = req.session.user_id
-        const specUser = await getUser(admin)
+    const user_id = req.session.user_id
+    if (user_id) {
+        const specUser = await getUser(user_id)
         const foundAdmin = specUser[0].account_type
         // console.log(specUser)
-        res.render('./main/menu.ejs', { allEntrees, allPlats, allDesserts, foundAdmin })
+        res.render('./main/menu.ejs', { allEntrees, allPlats, allDesserts, foundAdmin, user_id })
     } else {
         const foundAdmin = req.session.user_id
-        res.render('./main/menu.ejs', { allEntrees, allPlats, allDesserts, foundAdmin })
+        res.render('./main/menu.ejs', { allEntrees, allPlats, allDesserts, user_id })
     }
-})
+}))
 
 router.get('/reservation', async (req, res) => {
     // implementing current date to be passed on reservation.ejs 
     //to limit selection of dates past the current date
     let today = new Date().toISOString().slice(0, 10)
-    // console.log(today)
-    const loggedUser = req.session.user_id
-    if (req.session.user_id) {
-        const foundUser = await getUser(loggedUser)
-        res.render('./main/reservation.ejs', { today, foundUser, loggedUser })
+    const foundCovers = await reservationDate(today)
+    const user_id = req.session.user_id
+    // console.log(loggedUser)
+    if (user_id) {
+        const foundUser = await getUser(user_id)
+        res.render('./main/reservation.ejs', { today, foundUser, user_id, foundCovers })
     } else {
-        res.render('./main/reservation.ejs', { today, loggedUser })
+        res.render('./main/reservation.ejs', { today, user_id, foundCovers })
     }
 })
 
@@ -90,8 +92,11 @@ router.get('/reservation', async (req, res) => {
 //use the found default allergies and covers as the value if data is not coming from the form.
 //UPDATE: defaultReservation for creating a reservation for an anonymous user.
 router.post('/reservations', catchAsync(async (req, res) => {
+    console.log(req.body)
     const { reservation } = req.body
+    // console.log(reservation)
     const user_id = req.session.user_id
+
     const foundLogin = await login(reservation.email)
     const formCover = parseInt(reservation.covers)
     const covers = await reservationDate(reservation.date)//sum of all the covers in a specific date
@@ -105,8 +110,10 @@ router.post('/reservations', catchAsync(async (req, res) => {
                 const allergies = foundLogin[0].allergies//default allergy
                 const covers = foundLogin[0].covers//default cover
                 await createReservation(reservation.date, reservation.time, covers, reservation.name, reservation.email, user_id, allergies)
+
+   
             } else {
-                await createReservation(reservation.date, reservation.time, reservation.covers, reservation.name, reservation.email, user_id, reservation.allergies)
+                await createReservation(reservation.name, reservation.email, reservation.covers, reservation.date, reservation.time, reservation.allergies, user_id)
             }
             req.flash('success', 'Created a new reservation')
             res.redirect('/main')
@@ -115,16 +122,16 @@ router.post('/reservations', catchAsync(async (req, res) => {
             res.redirect('/main/reservation')
         }
     } else {
-        console.log(user_id)
-        if (!user_id) {
-            await defaultReservation(reservation.date, reservation.time, reservation.covers, reservation.name, reservation.email)
+        console.log(isIdLoggedIn)
+        if (!user_id && formCover === 0) {
+            await defaultReservation(reservation.name, reservation.email, reservation.date, reservation.time, reservation.allergies)
         }
-        else if (!reservation.allergies || !reservation.covers) {
-            const allergies = foundLogin[0].allergies
-            const covers = foundLogin[0].covers
-            await createReservation(reservation.date, reservation.time, covers, reservation.name, reservation.email, user_id, allergies)
+        else if (isIdLoggedIn && reservation.covers === 0) {
+            const allergies = isIdLoggedIn[0].allergies
+            const covers = isIdLoggedIn[0].covers
+            await createReservation(reservation.name, reservation.email, covers, reservation.date, reservation.time, reservation.allergies, user_id)
         } else {
-            await createReservation(reservation.date, reservation.time, reservation.covers, reservation.name, reservation.email, user_id, reservation.allergies)
+            await createReservation(reservation.name, reservation.email, reservation.covers, reservation.date, reservation.time, reservation.allergies, user_id)
         }
         req.flash('success', 'Created a new reservation')
         res.redirect('/main')

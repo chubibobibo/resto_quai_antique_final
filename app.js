@@ -88,7 +88,11 @@ app.use((err, req, res, next) => {
   }
 });
 //check
+<<<<<<< HEAD
 const port = process.env.MYSQL_PORT;
+=======
+const port = process.env.MYSQL_PORT
+>>>>>>> 4b1b3bb34a0f345f7ec7df8e5c4360185487e3cd
 app.listen(port, () => {
   console.log(`SERVING PORT ${port}`);
 });

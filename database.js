@@ -8,37 +8,64 @@ const pool = mysql
     user: process.env.MYSQL_USER,
     password: process.env.MYSQL_PASSWORD,
     database: process.env.MYSQL_DATABASE,
+<<<<<<< HEAD
     // port: process.env.MYSQL_PORT,
   })
   .promise();
+=======
+    port: process.env.MYSQL_PORT
+}).promise()
+
+>>>>>>> 4b1b3bb34a0f345f7ec7df8e5c4360185487e3cd
 
 export async function getImages(id) {
   const [image] = await pool.query(
     `
         SELECT * FROM images
+<<<<<<< HEAD
         WHERE id = ?`,
     [id]
   );
   return image[0];
 }
+=======
+        WHERE id = ?`, [id]
+    )
+    return image[0]
+};
+>>>>>>> 4b1b3bb34a0f345f7ec7df8e5c4360185487e3cd
 // // const result = await getImages(3)
 // // console.log(result)
 
 // selecting all images
 export async function getAll() {
+<<<<<<< HEAD
   const [allImages] = await pool.query(`
         SELECT * FROM images`);
   return allImages[0];
+=======
+    const [allImages] = await pool.query(
+        `SELECT * FROM images`
+    )
+    return allImages[0]
+>>>>>>> 4b1b3bb34a0f345f7ec7df8e5c4360185487e3cd
 }
+
 
 // selecting all menu
 export async function getMenu() {
   const allMenu = await pool.query(
     `SELECT title, description, price, category
         FROM menu`
+<<<<<<< HEAD
   );
   return allMenu[0];
 }
+=======
+    )
+    return allMenu[0]
+};
+>>>>>>> 4b1b3bb34a0f345f7ec7df8e5c4360185487e3cd
 // const result = await getMenu()
 // console.log(result)
 
@@ -51,23 +78,40 @@ export async function getEntrees() {
   return allEntrees[0];
 }
 
+<<<<<<< HEAD
+=======
+
+
+>>>>>>> 4b1b3bb34a0f345f7ec7df8e5c4360185487e3cd
 // selecting plats from the menu
 export async function getPlats() {
   const allPlats = await pool.query(
     `SELECT * FROM menu
         WHERE category = 'Plats'`
+<<<<<<< HEAD
   );
   return allPlats[0];
 }
+=======
+    )
+    return allPlats[0]
+};
+>>>>>>> 4b1b3bb34a0f345f7ec7df8e5c4360185487e3cd
 
 // selecting desserts from menu
 export async function getDesserts() {
   const allDesserts = await pool.query(
     `SELECT * FROM menu
         WHERE category = 'Desserts'`
+<<<<<<< HEAD
   );
   return allDesserts[0];
 }
+=======
+    )
+    return allDesserts[0]
+};
+>>>>>>> 4b1b3bb34a0f345f7ec7df8e5c4360185487e3cd
 
 // inserting data from reservation form
 //logic for inserting a new reservation using the date,miditime, soirtime,
@@ -75,6 +119,7 @@ export async function getDesserts() {
 //for the insert query(this means that these are the datas that we
 //will be accepting from the forms)
 //Update: included user_id
+<<<<<<< HEAD
 export async function createReservation(
   date,
   time,
@@ -91,12 +136,22 @@ export async function createReservation(
   );
   return newReservation[0];
 }
+=======
+export async function createReservation(name, email, covers, date, time, allergies, user_id) {
+    const newReservation = await pool.query(
+        `INSERT INTO reservations(name, email, covers, date, time, allergies, user_id)
+        VALUES(?, ?, ?, ?, ?, ?, ?)`, [name, email, covers, date, time, allergies, user_id]
+    )
+    return newReservation[0]
+};
+>>>>>>> 4b1b3bb34a0f345f7ec7df8e5c4360185487e3cd
 
 // inserting data from the register form
 //will expect a username and password to be passed in the function.
 //These arguments will come from the register form
 //added 2 new columns in the database( covers and allergies)
 export async function register(email, password, covers, allergies) {
+<<<<<<< HEAD
   const newRegister = await pool.query(
     `INSERT INTO users(email, password, covers, allergies)
         VALUES(?, ?, ?, ?)`,
@@ -120,15 +175,24 @@ export async function registerAdmin(
   );
   return newRegisterAdmin[0];
 }
+=======
+    const newRegister = await pool.query(
+        `INSERT INTO users(email, password, covers, allergies)
+        VALUES(?, ?, ?, ?)`, [email, password, covers, allergies]
+    )
+    return newRegister[0]
+};
 
-// adding default_covers and allergies
-// export async function registerDefaults(covers, allergies) {
-//     const defaults = await pool.query(
-//         `INSERT INTO users(covers, allergies)
-//         VALUES(?, ?)`, [covers, allergies]
-//     )
-//     return defaults[0]
-// }
+//adding admin user
+export async function registerAdmin(email, password, account_type) {
+    const newRegisterAdmin = await pool.query(
+        `INSERT INTO users(email, password, account_type)
+        VALUES(?, ?, ?)`, [email, password, account_type]
+    )
+    return newRegisterAdmin[0]
+};
+>>>>>>> 4b1b3bb34a0f345f7ec7df8e5c4360185487e3cd
+
 
 // searching for a username
 export async function login(email, password) {
@@ -139,6 +203,14 @@ export async function login(email, password) {
   );
   return foundLogin[0];
 }
+
+export async function idLogin(id) {
+    const idLoggedIn = await pool.query(
+        `SELECT * FROM users
+        WHERE id = ?`, [id]
+    )
+    return idLoggedIn[0]
+};
 
 // search a specific photo
 export async function getPhoto(id) {
@@ -183,6 +255,7 @@ export async function removeMenu(id) {
 }
 
 //creating reservations without being logged in.
+<<<<<<< HEAD
 export async function defaultReservation(date, time, name, email) {
   const defReservation = await pool.query(
     `INSERT INTO reservations(date, time, name, email)
@@ -191,12 +264,22 @@ export async function defaultReservation(date, time, name, email) {
   );
   return defReservation[0];
 }
+=======
+export async function defaultReservation(name, email, date, time, allergies) {
+    const defReservation = await pool.query(
+        `INSERT INTO reservations(name, email, date, time, allergies)
+        VALUES(?, ?, ?, ?, ? )`, [name, email, date, time, allergies]
+    )
+    return defReservation[0]
+};
+>>>>>>> 4b1b3bb34a0f345f7ec7df8e5c4360185487e3cd
 
 // selecting a specific reservation date then summing up all the covers
 export async function reservationDate(date) {
   const specificDate = await pool.query(
     `SELECT SUM(covers) AS total_covers
         FROM  reservations
+<<<<<<< HEAD
         WHERE date = ?`,
     [date]
   );
@@ -211,17 +294,45 @@ export async function getHours() {
   );
   return allHours[0];
 }
+=======
+        WHERE date = ?`, [date]
+    )
+    return specificDate[0]
+};
+
+//selecting opening days and hours
+export async function getHours() {
+    const allHours = await pool.query(
+        `SELECT
+        id,
+        day,
+        TIME_FORMAT(first_opening, "%H %i") AS first_opening,
+        TIME_FORMAT(first_closing, "%H %i") AS first_closing,
+        TIME_FORMAT(second_opening, "%H %i") AS second_opening,
+        TIME_FORMAT(second_closing, "%H  %i") AS second_closing 
+        FROM hours`
+    )
+    return allHours[0]
+};
+>>>>>>> 4b1b3bb34a0f345f7ec7df8e5c4360185487e3cd
 
 // selecting specific days and hours
 export async function specificHours(id) {
   const specHours = await pool.query(
     `SELECT * 
         FROM hours
+<<<<<<< HEAD
         WHERE id = ?`,
     [id]
   );
   return specHours[0];
 }
+=======
+        WHERE id = ?`, [id]
+    )
+    return specHours[0]
+};
+>>>>>>> 4b1b3bb34a0f345f7ec7df8e5c4360185487e3cd
 
 //updating the hours table
 export async function updateHours(
@@ -235,6 +346,7 @@ export async function updateHours(
     `UPDATE hours
         SET
         first_opening = ?, first_closing = ?, second_opening = ?, second_closing = ?
+<<<<<<< HEAD
         WHERE id = ?`,
     [first_opening, first_closing, second_opening, second_closing, id]
   );
@@ -250,3 +362,18 @@ export async function getUser(id) {
   );
   return specUser[0];
 }
+=======
+        WHERE id = ?`, [first_opening, first_closing, second_opening, second_closing, id]
+    )
+    return updatedHours[0]
+};
+
+//selecting specific user
+export async function getUser(id) {
+    const specUser = await pool.query(
+        `SELECT * FROM users
+        WHERE id = ?`, [id]
+    )
+    return specUser[0]
+};
+>>>>>>> 4b1b3bb34a0f345f7ec7df8e5c4360185487e3cd

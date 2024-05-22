@@ -6,16 +6,28 @@
                 <div class="card-body">
                     <h5 class="card-title">Log In</h5>
                     <!-- ----login form---- -->
-                    <form method="POST" action="/user/login">
+                    <form method="POST" class="needs-validation" action="/user/login" novalidate>
                         <div class="mb-3">
                             <label for="email" class="form-label">Email</label>
-                            <input type="email" class="form-control" id="email" name="login_name">
+                            <input type="email" class="form-control" id="email" name="login_name" required>
+                            <div class="valid-feedback">
+                                Looks good!
+                            </div>
+                            <div class="invalid-feedback">
+                                Please enter a valid email.
+                            </div>
                         </div>
                         <div class="mb-3">
                             <label for="password" class="form-label">Password</label>
-                            <input type="password" class="form-control" id="password" name="login_password">
+                            <input type="password" class="form-control" id="password" name="login_password" required>
+                            <div class="valid-feedback">
+                                Looks good!
+                            </div>
+                            <div class="invalid-feedback">
+                                Please enter a password.
+                            </div>
                         </div>
-                        <button type="submit" class="btn btn-primary">Log In</button>
+                        <button type="submit" class="btn btn-success">Log In</button>
                     </form>
                 </div>
             </div>
