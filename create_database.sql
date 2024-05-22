@@ -29,9 +29,12 @@ CREATE TABLE reservations(
     time TIME NOT NULL,
     FOREIGN KEY(user_id) REFERENCES users(id),
     covers INT NOT NULL DEFAULT 1,
+
+    name VARCHAR(100) NOT NULL,
+    email VARCHAR(50) NOT NULL,
     allergies VARCHAR(300) NOT NULL DEFAULT 'None Specified',
-	user_id INT,
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
+
 );
 
 -- MENU TABLE

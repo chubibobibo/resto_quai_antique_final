@@ -27,8 +27,9 @@ export async function getAll() {
     const [allImages] = await pool.query(
         `SELECT * FROM images`
     )
-    return allImages
-};
+    return allImages[0]
+}
+
 
 // selecting all menu
 export async function getMenu() {
@@ -48,9 +49,9 @@ export async function getEntrees() {
         WHERE category = 'Entrées'`
     )
     return allEntrees[0]
-};
-// const resultEntrees = await getEntrees()
-// console.log(resultEntrees)
+}
+
+
 
 // selecting plats from the menu
 export async function getPlats() {
@@ -170,7 +171,7 @@ export async function defaultReservation(name, email, date, time, allergies) {
     return defReservation[0]
 };
 
-// selecting a specific reservation date
+// selecting a specific reservation date then summing up all the covers
 export async function reservationDate(date) {
     const specificDate = await pool.query(
         `SELECT SUM(covers) AS total_covers
